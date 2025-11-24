@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { userTableDemoDetails } from '../../../utils';
+import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 
 const AddUser = () => {
 
@@ -8,15 +11,27 @@ const AddUser = () => {
         emailid: "",
         role: ""
     })
+    const navigate = useNavigate()
+
     function changeHandler(e) {
         const { name, value, type, checked } = e.target;
-        setAddUserData(prev => ({ ...prev,  [name]: type === "checkbox" ? checked : value }));
+        setAddUserData(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
     }
 
-    function submithandlerAddUser(e){
+    function submithandlerAddUser(e) {
         e.preventDefault();
         console.log(adduserData)
-        setAddUserData({firstname:"",lastname: "",emailid: "",role: "" })
+        const newUser = {
+            id: Date.now(),
+            firstName: adduserData.firstname,
+            lastName: adduserData.lastname,
+            email: adduserData.emailid,
+            role: adduserData.role,
+            action:  <EditIcon/>
+        };
+        userTableDemoDetails.push(newUser);
+        setAddUserData({ firstname: "", lastname: "", emailid: "", role: "" })
+        navigate('/dashboard')
     }
     return (
         <div>
@@ -41,7 +56,7 @@ const AddUser = () => {
                         </div>
                         <div className=''>
                             <label className='block' htmlFor="selectrole">Select Roles</label>
-                            <select className='border-gray-600 border w-100 h-10 bg-gray-100 text-gray-600' value={adduserData.role} onChange={(e)=>changeHandler(e)} name="role" id="" placeholder='Select Roles'>
+                            <select className='border-gray-600 border w-100 h-10 bg-gray-100 text-gray-600' value={adduserData.role} onChange={(e) => changeHandler(e)} name="role" id="" placeholder='Select Roles'>
                                 <option value="" disabled selected>Select Roles</option>
                                 <option value="admin">Admin</option>
                                 <option value="customer">Customer</option>
@@ -49,7 +64,7 @@ const AddUser = () => {
                             </select>
                         </div>
                     </div>
-                    <button onClick={(e)=>submithandlerAddUser(e)} className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 '>Submit</button>
+                    <button onClick={(e) => submithandlerAddUser(e)} className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 '>Submit</button>
                 </form>
             </div>
         </div>

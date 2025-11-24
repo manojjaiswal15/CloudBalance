@@ -2,12 +2,14 @@ import React from 'react'
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LaptopWindowsIcon from '@mui/icons-material/LaptopWindows';
 import { NavLink } from 'react-router-dom';
+import FilterDramaIcon from '@mui/icons-material/FilterDrama';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const SideBarDetails = [
   { id: 1, title: "User Management", element: <GroupAddIcon />, path: "/dashboard/users" },
   { id: 2, title: "User Onboarding", element: <LaptopWindowsIcon />, path: "/dashboard/onboarding" },
-  { id: 3, title: "Cost Explorer", element: <GroupAddIcon />, path: "/dashboard/cost" },
-  { id: 4, title: "AWS Services", element: <GroupAddIcon />, path: "/dashboard/aws" },
+  { id: 3, title: "Cost Explorer", element: <AttachMoneyIcon />, path: "/dashboard/cost" },
+  { id: 4, title: "AWS Services", element: <FilterDramaIcon />, path: "/dashboard/aws" },
 ];
 
 const SiderBar = ({sideclose}) => {
