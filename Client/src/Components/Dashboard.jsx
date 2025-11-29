@@ -5,26 +5,26 @@ import { Outlet } from 'react-router-dom'
 
 
 const Dashboard = () => {
-        const [sideclose,setSideClose]=useState(false);
+  const [sideclose, setSideClose] = useState(false);
   return (
     <div>
-       <div className='flex flex-col'>
-         <Navbar sideclose={sideclose} setSideClose={setSideClose}/>
-         {/* sliderbar and children layout */}
-         <div className='flex flex-row max-h-screen overflow-hidden'>
-               <div    className={`  ${sideclose ? 'translate-x-0 w-25' : 'translate-x-0 w-84'}
+      <div className='flex flex-col '>
+        <Navbar sideclose={sideclose} setSideClose={setSideClose} />
+        {/* sliderbar and children layout */}
+        <div className='flex flex-row max-h-[calc(100vh-80px)] overflow-hidden'>
+          <div className={`  ${sideclose ? 'translate-x-0 w-25 transition-transform duration-300 ease-in-out' : 'translate-x-0 w-84'}
              overflow-hidden
-              p-2 shadow-lg h-[92vh]
+              p-2 shadow-lg  max-h-[calc(100vh-80px)]
             `}
             aria-hidden={sideclose}
           >
-                <SiderBar sideclose={sideclose}/>
-            </div>
-            <main className='flex-1 bg-gray-100  max-h-[92vh] overflow-y-auto p-4'>
-                <Outlet/>
-            </main>
-         </div>
-       </div>
+            <SiderBar sideclose={sideclose} />
+          </div>
+          <main className='flex-1 bg-gray-100  min-h-[92vh]  overflow-y-auto p-4'>
+            <Outlet />
+          </main>
+        </div>
+      </div>
     </div>
   )
 }

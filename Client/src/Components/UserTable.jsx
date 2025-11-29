@@ -28,7 +28,7 @@ const UserTable = () => {
               <td className="border-e border-gray-200 p-2">{item.lastName}</td>
               <td className="border-e border-gray-200 p-2">{item.email}</td>
               <td className="border-e border-gray-200 p-2">{item.role}</td>
-              <td onClick={()=>{navigate('/dashboard/users/edit')}} className="border-e border-gray-200 p-2 cursor-pointer text-blue-600">{(item.action==="edit" ? <EditIcon/>: 'edit')}</td>
+              <td onClick={()=>{navigate('/dashboard/users/edit')}} className="border-e border-gray-200 p-2 cursor-pointer text-blue-600"><EditIcon/></td>
             </tr>
           ))}
         </tbody>

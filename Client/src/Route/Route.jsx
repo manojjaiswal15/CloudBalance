@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Login from '../Pages/Login'
 import Dashboard from '../Components/Dashboard'
 import User from '../Pages/User/User'
@@ -14,64 +14,64 @@ import ASGDetails from '../Pages/AWS/ASG/ASGDetails'
 
 
 const Route = () => {
-     const router=createBrowserRouter([
+  const router = createBrowserRouter([
     {
-      path:"/",
-      element:<Login/>
+      path: "/",
+      element: <Login />
     },
     {
-      path:'/dashboard',
-      element:<Dashboard/>,
-      children:[
+      path: '/dashboard',
+      element: <Dashboard />,
+      children: [
         {
-        index: true,
-        element: <User />,   
-      },
-        {
-          path:'users',
-          element:<User/>,
+          index: true,
+          element: <Navigate to="users" replace />,
         },
         {
-          path:'users/create',
-          element:<AddUser/>
+          path: 'users',
+          element: <User />,
         },
         {
-          path:'users/edit',
-          element:<EditUser/>
+          path: 'users/create',
+          element: <AddUser />
         },
         {
-          path:'cost',
-          element:<CostExplorer/>
+          path: 'users/edit',
+          element: <EditUser />
         },
         {
-          path:'aws',
-          element:<AwsExplorer/>,
-          children:[
+          path: 'cost',
+          element: <CostExplorer />
+        },
+        {
+          path: 'aws',
+          element: <AwsExplorer />,
+          children: [
             {
-              index:true,
-              element:<Ec2Details/>
+              index: true,
+              element: <Navigate to="ec2" replace />
             },
-           {
-             path:'ec2',
-             element:<Ec2Details/>
-           },{
-             path:'rds',
-             element:<RDSDetails/>
-           },{
-             path:'asg',
-             element:<ASGDetails/>
-           }
+            {
+              path: 'ec2',
+              element: <Ec2Details />
+            }, {
+              path: 'rds',
+              element: <RDSDetails />
+            }, {
+              path: 'asg',
+              element: <ASGDetails />
+            }
           ]
         },
         {
-          path:'onboarding',
-          element:<UserOnboarding/>
+          path: 'onboarding',
+          element: <UserOnboarding />
         }
       ]
     }
   ])
   return (
-   <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   )
 }
 

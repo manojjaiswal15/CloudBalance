@@ -6,7 +6,7 @@ export const userTableDemoDetails = [
     lastName: "Doe",
     role: "Admin",
     email: "john.doe@example.com",
-    action: "edit",
+    
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ export const userTableDemoDetails = [
     lastName: "Smith",
     role: "User",
     email: "jane.smith@example.com",
-    action:  "edit",
+    
   },
   {
     id: 3,
@@ -22,7 +22,7 @@ export const userTableDemoDetails = [
     lastName: "Brown",
     role: "Read-Only",
     email: "michael.brown@example.com",
-    action:  "edit",
+    
   },
   {
     id: 4,
@@ -30,7 +30,7 @@ export const userTableDemoDetails = [
     lastName: "Johnson",
     role: "User",
     email: "emily.johnson@example.com",
-    action:  "edit",
+    
   },
   {
     id: 5,
@@ -38,7 +38,7 @@ export const userTableDemoDetails = [
     lastName: "Wilson",
     role: "Admin",
     email: "chris.wilson@example.com",
-    action: "edit",
+    
   },
 
 ];

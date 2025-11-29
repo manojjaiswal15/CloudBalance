@@ -16,7 +16,7 @@ const SiderBar = ({sideclose}) => {
   return (
     <nav className="flex flex-col p-2">
       {SideBarDetails.map((item) => (
-        <NavLink key={item.id}  to={item.path}  className={({ isActive }) =>   `flex items-center gap-4 p-4 rounded transition-colors duration-150
+        <NavLink key={item.id}  to={item.path}  className={({ isActive }) =>   `active-tab flex items-center gap-4 p-4 rounded transition-colors duration-150
              ${isActive ? 'bg-sky-500 text-white' : ' hover:bg-sky-100'}`
           }
         >

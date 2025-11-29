@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../assets/logo/logo.png'
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+
 
 const Navbar = ({sideclose,setSideClose}) => {
     const navigate=useNavigate()
@@ -35,7 +36,7 @@ const Navbar = ({sideclose,setSideClose}) => {
                         </div>
                         <div className='flex flex-col items-start border-r-gray-600 border-r pr-3'>
                             <p className='text-sm text-gray-600 font-normal'>Welcome</p>
-                            <h3 className='text-md text-black font-bold'>Manoj</h3>
+                            <h3 className='text-md font-bold text-sky-600'>Manoj</h3>
                         </div>
                         <div>
                             <button onClick={()=>navigate('/')} className='border-sky-600 border-2 rounded px-3 py-2 text-sky-600 gap-4 flex items-center justify-center cursor-pointer'>
