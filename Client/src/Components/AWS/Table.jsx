@@ -10,7 +10,6 @@ import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const AwsTableDetail = ({ data }) => {
-    const [copy,setCopy]=useState('');
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             color: theme.palette.common.black,
@@ -33,8 +32,7 @@ const AwsTableDetail = ({ data }) => {
 
     const copyToClipboard = async (text) => {
         try {
-           const valueCopy = await navigator.clipboard.writeText(String(text) ?? '');
-            setCopy(valueCopy);
+           await navigator.clipboard.writeText(String(text) ?? '');
             alert(`${text}`)
         } catch (error) {
             console.log(error)

@@ -11,6 +11,7 @@ import EditUser from '../Pages/User/EditUser/EditUser'
 import Ec2Details from '../Pages/AWS/Ec2/Ec2Details'
 import RDSDetails from '../Pages/AWS/RDS/RDSDetails'
 import ASGDetails from '../Pages/AWS/ASG/ASGDetails'
+import ProtectedRoute from './ProtectedRoute'
 
 
 const Route = () => {
@@ -21,7 +22,7 @@ const Route = () => {
     },
     {
       path: '/dashboard',
-      element: <Dashboard />,
+      element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
       children: [
         {
           index: true,
