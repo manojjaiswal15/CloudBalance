@@ -6,6 +6,8 @@ import com.cloudbalance.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -27,5 +29,17 @@ public class UserService {
             newUser.setRole(users.getRole());
         }
         return userRepository.save(newUser);
+    }
+
+//    edit user
+    public UserEntity editUser(RequestUserDTO edituser,Long id){
+        Optional<UserEntity> validUser=userRepository.findById(id);
+            if(validUser.isPresent()){
+                 validUser.get().setEmail(edituser.getEmail());
+                 validUser.get().setFirstName(edituser.getFirstName());
+                 validUser.get().setLastName(edituser.getLastName());
+                 validUser.get().setRole(edituser.getRole());
+            }
+            return userRepository.save(validUser.get());
     }
 }
