@@ -11,7 +11,7 @@ const Dashboard = () => {
       <div className='flex flex-col '>
         <Navbar sideclose={sideclose} setSideClose={setSideClose} />
         {/* sliderbar and children layout */}
-        <div className='flex flex-row max-h-[calc(100vh-80px)] overflow-hidden'>
+        <div className='flex flex-row max-h-[calc(100vh-110px)] overflow-hidden'>
           <div className={`  ${sideclose ? 'translate-x-0 w-25 transition-transform duration-300 ease-in-out' : 'translate-x-0 w-84'}
              overflow-hidden
               p-2 shadow-lg  max-h-[calc(100vh-80px)]

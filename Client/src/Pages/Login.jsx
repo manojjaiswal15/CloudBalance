@@ -14,6 +14,7 @@ const Login = () => {
     const { user, isAuthenticated, error } = useSelector(store => store.auth)
     const dispatch = useDispatch()
 
+    
     // statevalue handle
     function changeHandler(e) {
         setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
@@ -34,10 +35,10 @@ const Login = () => {
       navigate('/dashboard');
       toast.success("Login SuccessFully")
     }
-    else{
+    else if(!user || !isAuthenticated){
         toast.error("Incorrect Password and Email")
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated]);
     
     return (
         <main className='flex items-center justify-center w-full h-screen'>

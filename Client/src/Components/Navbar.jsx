@@ -17,6 +17,7 @@ const Navbar = ({sideclose,setSideClose}) => {
         dispatch(logout())
         navigate('/')
         toast.success("Logout SuccessFully")
+
     }
    
     return (
