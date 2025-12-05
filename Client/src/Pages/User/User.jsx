@@ -9,9 +9,9 @@ const User = () => {
   return (
     <div>
         {
-          user.role=="admin"? <><h4 className='text-2xl font-semibold'>Add New User</h4>
+          user.role=="admin"? <div className='pb-3 border-b border-b-gray-400'><h4 className='text-2xl font-semibold'>Add New User</h4>
          <button  onClick={()=>navigate('/dashboard/users/create')} className='border-sky-600 border-2 rounded px-3 py-2 bg-sky-600 cursor-pointer text-white mt-3'>Add User</button>
-        <br className='text-black'/></> : ''
+        </div> : ''
         }
         <div className='mt-2'>
             <h2 className='font-medium text-base text-gray-700'>All User details</h2>
