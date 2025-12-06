@@ -66,12 +66,14 @@ const GroupTabGraph = () => {
           </div>
         </div>
       </div>
-      <div className='flex'>
-       <CostServiceGraph  sliderDetails={sliderDetails}/>
-        <div className={`${sliderDetails ? 'w-[20vw] bg-white border border-gray-300  duration-300 translate-x-0' : 'w-0 translate-x-24'}`}>
-          hello
-        </div>
+      {/* layout */}
+      <div className="flex w-full">
+        {/* LEFT: Graph */}
+        <div className="flex-1 overflow-hidden">  <CostServiceGraph /> </div>
+        {/* RIGHT: Sidebar */}
+        <div className={`bg-white border border-gray-300  transition-all duration-300 overflow-hidden   ${sliderDetails ? "w-[20vw]" : "w-0"}`} >hello</div>
       </div>
+
     </div>
   )
 }

@@ -1,76 +1,97 @@
 export const GroupTabLabel=['Service','Instance Type','Account ID','Usage Type','Platform','Region','Usage Type Group','Purchase Operation','API Opeation','Resources','Charge Type','Availbilityzone','Tenacncy','Legal Entity','Billing Entity']
 
 
-
 export const dataSource = {
   chart: {
-    caption: "Split of visitors by Channels",
-    placevaluesinside: "1",
-    showvalues: "0",
-    plottooltext: "<b>$dataValue</b> visitors from $label in $seriesName",
-    theme: "candy"
+    xaxisname: "Months",
+    yaxisname: "Cost (in $)",
+    formatnumberscale: "1",
+    plottooltext:
+      "<b>$dataValue</b> apps were available on <b>$seriesName</b> in $label",
+    theme: "gammel",
+    drawcrossline: "1"
   },
   categories: [
     {
       category: [
         {
-          label: "Organic"
+          label: "Jun 2025"
         },
         {
-          label: "Offline Stores"
+          label: "Jul 2025"
         },
         {
-          label: "Email Campaigns"
+          label: "Aug 2025"
         },
         {
-          label: "Social Events"
+          label: "Sep 2025"
         },
         {
-          label: "Paid Channels"
+          label: "Oct 2025"
         }
       ]
     }
   ],
   dataset: [
     {
-      seriesname: "2017",
+      seriesname: "CK Discounts",
       data: [
         {
-          value: "17000"
+          value: "1962576"
         },
         {
-          value: "19500"
+          value: "1798024"
         },
         {
-          value: "12500"
+          value: "1961897"
         },
         {
-          value: "14500"
+          value: "1903654"
         },
         {
-          value: "17500"
+          value: "1642759"
         }
       ]
     },
     {
-      seriesname: "2018",
+      seriesname: "AWS Service",
       data: [
         {
-          value: "25400"
+          value: "2108450"
         },
         {
-          value: "29800"
+          value: "2469894"
         },
         {
-          value: "21800"
+          value: "2868084"
         },
         {
-          value: "19500"
+          value: "4229856"
         },
         {
-          value: "21200"
+          value: "3553050"
+        }
+      ]
+    },
+    {
+      seriesname: "Amazon AppStore",
+      data: [
+        {
+          value: "452054"
+        },
+        {
+          value: "487083"
+        },
+        {
+          value: "455873"
+        },
+        {
+          value: "467823"
+        },
+        {
+          value: "483328"
         }
       ]
     }
-  ],
+  ]
 };
