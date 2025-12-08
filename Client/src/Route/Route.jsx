@@ -12,6 +12,7 @@ import Ec2Details from '../Pages/AWS/Ec2/Ec2Details'
 import RDSDetails from '../Pages/AWS/RDS/RDSDetails'
 import ASGDetails from '../Pages/AWS/ASG/ASGDetails'
 import ProtectedRoute from './ProtectedRoute'
+import UserOnboardingPage from '../Pages/Onboarding/IAM/UserOnboardingPage'
 
 
 const Route = () => {
@@ -66,8 +67,13 @@ const Route = () => {
         },
         {
           path: 'onboarding',
-          element: <UserOnboarding />
+          element: <UserOnboarding />,
+        },
+        {
+          path:'onboarding/add',
+          element:<UserOnboardingPage/>
         }
+        
       ]
     }
   ])

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import SiderBar from './SiderBar'
 import { Outlet } from 'react-router-dom'
+import Footer from './Footer'
 
 
 const Dashboard = () => {
@@ -23,7 +24,9 @@ const Dashboard = () => {
           <main className='flex-1 bg-gray-100  min-h-[92vh]  overflow-y-auto p-4'>
             <Outlet />
           </main>
+          
         </div>
+            <Footer/>
       </div>
     </div>
   )

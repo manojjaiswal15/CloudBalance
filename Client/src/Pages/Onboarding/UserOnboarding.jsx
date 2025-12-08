@@ -1,7 +1,13 @@
 import React from 'react'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import { useNavigate } from 'react-router-dom';
 
 const UserOnboarding = () => {
+  const navigate=useNavigate()
+
+  const handleNavigate = () => {
+    navigate('/dashboard/onboarding/add')
+  }
   return (
     <div className=''>
       <div className='w-[96%] mx-auto'>
@@ -10,7 +16,7 @@ const UserOnboarding = () => {
                <FolderOpenIcon style={{fontSize:"300px"}}/>
                <h3 className='text-lg font-semibold'>You have no Accounts Linked..</h3>
                <p className='text-gray-600 text-base'>Click below to start linking yours Accounts</p>
-               <button className='px-4  py-2 rounded text-center bg-sky-500 text-white cursor-pointer'>Link Account</button>
+               <button onClick={handleNavigate} className='px-4  py-2 rounded text-center bg-sky-500 text-white cursor-pointer'>Link Account</button>
          </div>
       </div>
     </div>
