@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Table(name="Users")
 public class UserEntity {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column

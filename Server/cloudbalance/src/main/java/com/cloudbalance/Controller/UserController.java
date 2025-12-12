@@ -1,12 +1,16 @@
 package com.cloudbalance.Controller;
 
-import com.cloudbalance.DTO.User.RequestUserDTO;
-import com.cloudbalance.Entity.UserEntity;
+import com.cloudbalance.DTO.User.LoginUserDTO;
+//import com.cloudbalance.Entity.UserEntity;
+import com.cloudbalance.DTO.User.ResponseUserDTO;
+import com.cloudbalance.DTO.User.UpdateUserDTO;
 import com.cloudbalance.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -16,13 +20,19 @@ public class UserController {
 
 //     users Add
     @PostMapping("add")
-    public ResponseEntity<UserEntity> addUser(@RequestBody RequestUserDTO userDTO){
+    public ResponseEntity<ResponseUserDTO> addUser(@RequestBody UpdateUserDTO userDTO){
         return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.CREATED);
     }
 
 //    user update
     @PutMapping("edit/{id}")
-    public ResponseEntity<UserEntity> editUser(@RequestBody RequestUserDTO userDTO, @PathVariable Long id){
+    public ResponseEntity<ResponseUserDTO> editUser(@RequestBody UpdateUserDTO userDTO, @PathVariable Long id){
         return new ResponseEntity<>(userService.editUser(userDTO,id),HttpStatus.OK);
+    }
+
+//    all user details
+    @GetMapping("/users")
+    public ResponseEntity<List<ResponseUserDTO>> allUser(){
+        return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
     }
 }
