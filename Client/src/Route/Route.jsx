@@ -13,9 +13,12 @@ import RDSDetails from '../Pages/AWS/RDS/RDSDetails'
 import ASGDetails from '../Pages/AWS/ASG/ASGDetails'
 import ProtectedRoute from './ProtectedRoute'
 import UserOnboardingPage from '../Pages/Onboarding/IAM/UserOnboardingPage'
+import { useSelector } from 'react-redux'
 
 
 const Route = () => {
+  const {user}=useSelector(state=>state.auth)
+  const pageRoleBased=user?.role==='customer' ? 'cost' : 'users'
   const router = createBrowserRouter([
     {
       path: "/",
@@ -27,7 +30,7 @@ const Route = () => {
       children: [
         {
           index: true,
-          element: <Navigate to="users" replace />,
+          element: <Navigate to={pageRoleBased} replace />,
         },
         {
           path: 'users',
@@ -38,7 +41,7 @@ const Route = () => {
           element: <AddUser />
         },
         {
-          path: 'users/edit',
+          path: `users/edit/:id`,
           element: <EditUser />
         },
         {

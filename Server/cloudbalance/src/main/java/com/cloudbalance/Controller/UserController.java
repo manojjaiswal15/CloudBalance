@@ -21,6 +21,7 @@ public class UserController {
 //     users Add
     @PostMapping("add")
     public ResponseEntity<ResponseUserDTO> addUser(@RequestBody UpdateUserDTO userDTO){
+        System.out.println("req body: " + userDTO);
         return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.CREATED);
     }
 
@@ -34,5 +35,11 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<ResponseUserDTO>> allUser(){
         return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
+    }
+
+//    specific user detail
+    @GetMapping("/user/{id}")
+    public ResponseEntity<ResponseUserDTO> specificUser(@PathVariable  Long id){
+        return new ResponseEntity<>(userService.getspecificUser(id),HttpStatus.OK);
     }
 }

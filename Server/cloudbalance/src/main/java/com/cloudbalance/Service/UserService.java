@@ -25,8 +25,9 @@ public class UserService {
 
 //    add user
     public ResponseUserDTO addUser(UpdateUserDTO users){
+        System.out.println("UpdateUserDTO: " + users);
         UserEntity newUser=new UserEntity();
-        if(users.getEmail()!=null || users.getRole()!=null || users.getFirstName()!=null || users.getLastName()!=null){
+        if(users.getEmail()!=null && users.getRole()!=null && users.getFirstName()!=null && users.getLastName()!=null && users.getPassword() != null){
             newUser.setEmail(users.getEmail());
             newUser.setFirstName(users.getFirstName());
             newUser.setLastName(users.getLastName());
@@ -35,6 +36,7 @@ public class UserService {
         }
 
         UserEntity saved = userRepository.save(newUser);
+        System.out.println("saved: " + saved);
 
         return ResponseUserDTO.fromEntity(saved);
     }
@@ -61,6 +63,11 @@ public class UserService {
                 .stream()
                 .map(ResponseUserDTO::fromEntity)
                 .toList();
+    }
+//    specific user
+    public ResponseUserDTO getspecificUser(Long id){
+        UserEntity user=userRepository.findById(id).orElseThrow();
+        return ResponseUserDTO.fromEntity(user);
     }
 
 

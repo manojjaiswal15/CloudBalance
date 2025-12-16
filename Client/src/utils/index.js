@@ -1,4 +1,3 @@
-import EditIcon from '@mui/icons-material/Edit';
 export const userTableDemoDetails = [
   {
     id: 1,

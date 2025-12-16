@@ -4,7 +4,8 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 const users = [
   { id: 1, email: 'manoj@gmail.com', password: '1234', role: 'admin' },
-  {id:2 , email: 'readonly@gmail.com',password:'1234', role:'readonly'}
+  {id:2 , email: 'readonly@gmail.com',password:'1234', role:'readonly'},
+  {id:2 , email: 'customer@gmail.com',password:'1234', role:'customer'}
 ];
 
 export const login = (email, password) => {

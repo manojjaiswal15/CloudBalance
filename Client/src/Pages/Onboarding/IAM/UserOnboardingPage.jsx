@@ -13,9 +13,9 @@ import page3image3 from '../../../assets/onboarding/page3img3.png'
 
 // copy clipboard
 
-export const CopyTextProps = ({ content, heightSize }) => {
+export const CopyTextProps = ({ content }) => {
     return (
-        <div className={`w-full border border-sky-600 h-[${heightSize}px] overflow-y-scroll relative group group-hover:bg-sky-600`}>
+        <div className={`w-full border border-sky-600 h-[150px] overflow-y-scroll relative group group-hover:bg-sky-600`}>
             <div className='sticky right-1 top-1 cursor-pointer group-hover:bg-blue-600 group-hover:text-white'>
                 <ContentCopyIcon onClick={() => copyToClipboard(JSON.stringify(content))} className='text-sky-600 absolute group-hover:text-blue-600 right-1 top-1  z-50 group-hover:rounded-md text-xs' />
             </div>
@@ -45,7 +45,7 @@ const UserOnboardingFirstPage = ({setIndexPage}) => {
                 <div className='flex items-center gap-3 flex-wrap w-full'>
                     <span className='bg-gray-400 text-white w-6 h-6 rounded-full text-center'>2</span>
                     <p>In theTrusted entity typesection, selectCustom trust policy.Replace the prefilled policy with the policy provided below -</p>
-                    <CopyTextProps content={page1} heightSize={200} />
+                    <CopyTextProps content={page1} />
                 </div>
                 <div className='flex items-start gap-3'>
                     <span className='bg-gray-400 text-white w-6 h-6 rounded-full text-center'>3</span>
@@ -56,7 +56,7 @@ const UserOnboardingFirstPage = ({setIndexPage}) => {
                     <p>In the Role name field, enter the below-mentioned role name, and click on <span className='font-bold'>Create Role -</span></p>
                     {/* copyclipboard */}
                     <div className={`w-full pt-3 pl-3 border border-sky-600 h-12 overflow-y-scroll relative group group-hover:bg-sky-600`}>
-                        <div className='sticky right-1 top-1 cursor-pointer group-hover:bg-blue-600 group-hover:text-white'>
+                        <div clafieldssName='sticky right-1 top-1 cursor-pointer group-hover:bg-blue-600 group-hover:text-white'>
                             <ContentCopyIcon onClick={() => copyToClipboard(JSON.stringify(content))} className='text-sky-600 absolute group-hover:text-blue-600 right-1 top-1  z-50 group-hover:rounded-md text-xs' />
                         </div>
                         <p className='text-sky-600 text-base'>
@@ -159,7 +159,15 @@ const UserOnboardingThirdPage=({setIndexPage})=>{
                 <div className='flex items-center gap-3 flex-wrap w-full'>
                     <span className='bg-gray-400 text-white w-6 h-6 rounded-full text-center'>2</span>
                     <p> Name the report as shown below and select the Include resource IDs checkbox -</p>
-                    <CopyTextProps content={"ck-tuner-275595855473-hourly-cur"} heightSize={40} />
+                    {/* <CopyTextProps content={"ck-tuner-275595855473-hourly-cur"} heightSize={40} /> */}
+                    <div className={`w-full pt-3 pl-3 border border-sky-600 h-12 overflow-y-scroll relative group group-hover:bg-sky-600`}>
+                        <div className='sticky right-1 top-1 cursor-pointer group-hover:bg-blue-600 group-hover:text-white'>
+                            <ContentCopyIcon onClick={() => copyToClipboard("ck-tuner-275595855473-hourly-cur")} className='text-sky-600 absolute group-hover:text-blue-600 right-1 top-1  z-50 group-hover:rounded-md text-xs' />
+                        </div>
+                        <p className='text-sky-600 text-base'>
+                            ck-tuner-275595855473-hourly-cur
+                        </p>
+                    </div>
 
                 </div>
                     <p className='text-xs text-gray-600'>Ensure that the following configuration is checked</p>
