@@ -15,6 +15,9 @@ const AddUser = () => {
     })
     const navigate = useNavigate()
 
+        const userToken = localStorage.getItem("token")
+
+
     useEffect(()=>{
     submithandlerAddUser()
     },[])
@@ -28,7 +31,6 @@ const AddUser = () => {
         e.preventDefault();
         console.log(adduserData)
         const newUser = {
-            id: Date.now(),
             firstName: adduserData.firstname,
             lastName: adduserData.lastname,
             email: adduserData.emailid,
@@ -36,8 +38,15 @@ const AddUser = () => {
             password: adduserData.password,
             action:  <EditIcon/>
         };
-        // userTableDemoDetails.push(newUser);
-        const response=await axios.post('http://localhost:8080/admin/add',newUser);
+         const response = await axios.post(
+        "http://localhost:8080/admin/add",
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
         console.log(response)
         setAddUserData({ firstname: "", lastname: "", emailid: "", role: "" ,password:""})
         navigate('/dashboard')
@@ -45,7 +54,7 @@ const AddUser = () => {
     return (
         <div>
             <div className=' w-full'>
-                <form className='p-4 bg-white mx-auto w-[80vw]'>
+                <form onSubmit={submithandlerAddUser} className='p-4 bg-white mx-auto w-[80vw]'>
                     {/* top */}
                     <div className='flex items-center gap-6 pb-6'>
                         <div className=''>
@@ -78,7 +87,7 @@ const AddUser = () => {
                                 <option value="readonly">Ready Only</option>
                             </select>
                         </div>
-                    <button onClick={(e) => submithandlerAddUser(e)} className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 '>Submit</button>
+                    <button type='subimt' className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 '>Submit</button>
                 </form>
             </div>
         </div>

@@ -1,27 +1,53 @@
-import { LOGIN, LOGOUT, LOGIN_FAIL }  from './userAction'
+import { LOGIN, LOGOUT, LOGIN_FAIL } from './userAction'
+
+const token = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
-    user:null,
-    isAuthenticated: false,
-    error:null
-}
-
+    user: user || null,
+    token: token || null,
+    isAuthenticated: !!token,
+    error: null,
+};
 const UserReducer = (state = initialState, action) => {
-
     switch (action.type) {
-        case LOGIN:
-            return { ...state, user:action.payload.user, 
-                 isAuthenticated: true, 
-                 error:null
-            }
-        case LOGIN_FAIL:
-            return{...state,isAuthenticated:false,user:null,error:action.payload}
 
+        case LOGIN:
+            localStorage.setItem("token", action.payload.user.token);
+            localStorage.setItem(
+                "user",
+                JSON.stringify({
+                    firstName: action.payload.user.firstName,
+                    role: action.payload.user.role,
+                })
+            );
+            return {
+                ...state,
+                user: {
+                    firstName: action.payload.user.firstName,
+                    role: action.payload.user.role,
+                },
+                token: action.payload.user.token,
+                isAuthenticated: true,
+            };
+        case LOGIN_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                isAuthenticated: false,
+            };
         case LOGOUT:
-            return initialState
+            localStorage.clear();
+            return {
+                user: null,
+                token: null,
+                isAuthenticated: false,
+            };
+
         default:
-            return state
+            return state;
     }
 }
+
 
 export default UserReducer

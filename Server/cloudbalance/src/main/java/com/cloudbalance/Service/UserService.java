@@ -1,27 +1,51 @@
 package com.cloudbalance.Service;
 
+import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
 import com.cloudbalance.DTO.User.LoginUserDTO;
 import com.cloudbalance.DTO.User.ResponseUserDTO;
 import com.cloudbalance.DTO.User.UpdateUserDTO;
 import com.cloudbalance.Entity.UserEntity;
 import com.cloudbalance.Repository.UserRepository;
+import com.cloudbalance.Utils.JWTUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+
+
 
 //    login for users
-    public UserEntity loginUser(LoginUserDTO users){
-        UserEntity valid= userRepository.findByEmail(users.getEmail());
-        return null;
-    }
+public LoginResponseJWTDTO loginUser(LoginUserDTO users){
+    UserEntity user= userRepository.findByEmail(users.getEmail()).orElseThrow();
+    authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(user.getEmail(),users.getPassword())
+    );
+
+        String token= jwtUtil.generateToken(user.getUsername());
+        String firstName=user.getFirstName();
+        String role=user.getRole();
+    return new LoginResponseJWTDTO(token,firstName,role);
+}
 
 //    add user
     public ResponseUserDTO addUser(UpdateUserDTO users){
@@ -32,7 +56,7 @@ public class UserService {
             newUser.setFirstName(users.getFirstName());
             newUser.setLastName(users.getLastName());
             newUser.setRole(users.getRole());
-            newUser.setPassword(users.getPassword());
+            newUser.setPassword(passwordEncoder.encode(users.getPassword()));
         }
 
         UserEntity saved = userRepository.save(newUser);
@@ -49,7 +73,7 @@ public class UserService {
             validUser.get().setFirstName(edituser.getFirstName());
             validUser.get().setLastName(edituser.getLastName());
             validUser.get().setRole(edituser.getRole());
-            validUser.get().setPassword(edituser.getPassword());
+            validUser.get().setPassword(passwordEncoder.encode(edituser.getPassword()));
         }
         UserEntity updated= (UserEntity)userRepository.save(validUser.get());
         return ResponseUserDTO.fromEntity(updated);
@@ -59,6 +83,7 @@ public class UserService {
 
 //    alluser
     public List<ResponseUserDTO> getAllUser() {
+        System.out.println("inside get service");
         return userRepository.findAll()
                 .stream()
                 .map(ResponseUserDTO::fromEntity)

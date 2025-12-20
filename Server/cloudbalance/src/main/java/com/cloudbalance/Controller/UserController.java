@@ -1,5 +1,6 @@
 package com.cloudbalance.Controller;
 
+import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
 import com.cloudbalance.DTO.User.LoginUserDTO;
 //import com.cloudbalance.Entity.UserEntity;
 import com.cloudbalance.DTO.User.ResponseUserDTO;
@@ -18,10 +19,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+//    login
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseJWTDTO> login(@RequestBody LoginUserDTO loginUser){
+        return  new ResponseEntity<>(userService.loginUser(loginUser),HttpStatus.OK);
+    }
+
 //     users Add
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResponseEntity<ResponseUserDTO> addUser(@RequestBody UpdateUserDTO userDTO){
-        System.out.println("req body: " + userDTO);
         return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.CREATED);
     }
 

@@ -8,15 +8,20 @@ const UserTable = () => {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
   const [userTableDetails, setUserTableDetails] = useState([]);
+ 
+  const userToken=localStorage.getItem("token")
 
   useEffect(() => {
     async function userTableDetails() {
       try {
         const response = await axios.get(
-          "http://localhost:8080/admin/users"
+          "http://localhost:8080/admin/users",{
+             headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+          }
         );
-        setUserTableDetails(response.data);
-        console.log(response.data);
+        setUserTableDetails(response?.data);
       } catch (error) {
         console.error("Failed to fetch users", error);
       }

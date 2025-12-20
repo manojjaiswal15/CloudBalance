@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 const Navbar = ({sideclose,setSideClose}) => {
     const navigate=useNavigate()
     const dispatch=useDispatch()
-
+    const user=JSON.parse(localStorage.getItem("user"))
     function LogoutHandle(){
         dispatch(logout())
         navigate('/')
@@ -47,7 +47,7 @@ const Navbar = ({sideclose,setSideClose}) => {
                         </div>
                         <div className='flex flex-col items-start border-r-gray-600 border-r pr-3'>
                             <p className='text-sm text-gray-600 font-normal'>Welcome</p>
-                            <h3 className='text-md font-bold text-sky-600'>Manoj</h3>
+                            <h3 className='text-md font-bold text-sky-600'>{user.firstName}</h3>
                         </div>
                         <div>
                             <button onClick={LogoutHandle} className='border-sky-600 border-2 rounded px-3 py-2 text-sky-600 gap-4 flex items-center justify-center cursor-pointer'>
