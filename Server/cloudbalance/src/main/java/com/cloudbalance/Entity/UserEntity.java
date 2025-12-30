@@ -1,16 +1,16 @@
 package com.cloudbalance.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,8 +19,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 @Table(name="Users")
 public class UserEntity implements UserDetails {
 
@@ -48,10 +46,16 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
-    @NullMarked
     public String getUsername() {
         return email;
     }
 
+
+//    mapping user and account onboarding
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+            @JoinTable(name = "user_onboarding_accounts",
+                    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+                    inverseJoinColumns = @JoinColumn(name = "onboarding_account_id", referencedColumnName = "id"))
+   private List<OnboardingAccountEntity> onboardingAccountEntities=new ArrayList<>();;
 
 }

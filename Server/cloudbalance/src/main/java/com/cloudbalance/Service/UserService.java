@@ -11,6 +11,7 @@ import com.cloudbalance.Utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class UserService {
 
 //    login for users
 public LoginResponseJWTDTO loginUser(LoginUserDTO users){
-    UserEntity user= userRepository.findByEmail(users.getEmail()).orElseThrow();
+    UserEntity user= userRepository.findByEmail(users.getEmail()).orElseThrow(()->new UsernameNotFoundException("Email not Register"));
     authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(user.getEmail(),users.getPassword())
     );
@@ -49,8 +50,8 @@ public LoginResponseJWTDTO loginUser(LoginUserDTO users){
 
 //    add user
     public ResponseUserDTO addUser(UpdateUserDTO users){
-        System.out.println("UpdateUserDTO: " + users);
         UserEntity newUser=new UserEntity();
+//        UserEntity existUser=userRepository.findByEmail(users.getEmail()).orElseThrow(()->new RuntimeException("User Already Exist..."));
         if(users.getEmail()!=null && users.getRole()!=null && users.getFirstName()!=null && users.getLastName()!=null && users.getPassword() != null){
             newUser.setEmail(users.getEmail());
             newUser.setFirstName(users.getFirstName());
@@ -60,8 +61,6 @@ public LoginResponseJWTDTO loginUser(LoginUserDTO users){
         }
 
         UserEntity saved = userRepository.save(newUser);
-        System.out.println("saved: " + saved);
-
         return ResponseUserDTO.fromEntity(saved);
     }
 
@@ -83,7 +82,6 @@ public LoginResponseJWTDTO loginUser(LoginUserDTO users){
 
 //    alluser
     public List<ResponseUserDTO> getAllUser() {
-        System.out.println("inside get service");
         return userRepository.findAll()
                 .stream()
                 .map(ResponseUserDTO::fromEntity)
@@ -91,9 +89,10 @@ public LoginResponseJWTDTO loginUser(LoginUserDTO users){
     }
 //    specific user
     public ResponseUserDTO getspecificUser(Long id){
-        UserEntity user=userRepository.findById(id).orElseThrow();
+        UserEntity user=userRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("This User not Exists..."));
         return ResponseUserDTO.fromEntity(user);
     }
+
 
 
 }

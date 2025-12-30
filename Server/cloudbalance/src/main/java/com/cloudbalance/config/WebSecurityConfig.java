@@ -36,7 +36,7 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(c -> c.configurationSource(corsConfig.corsFilter()))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/admin/add", "/admin/edit/**").hasRole("admin")
+                        auth.requestMatchers("/admin/add", "/admin/edit/**","/onboarding/add","/onboarding/assign").hasRole("admin")
                                 .requestMatchers("/admin/users").hasAnyRole("admin", "readonly")
                                 .requestMatchers("/admin/login").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -64,3 +64,4 @@ public class WebSecurityConfig {
         return config.getAuthenticationManager();
     }
 }
+

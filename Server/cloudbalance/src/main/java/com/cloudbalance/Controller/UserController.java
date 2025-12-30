@@ -1,23 +1,26 @@
 package com.cloudbalance.Controller;
 
-import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
-import com.cloudbalance.DTO.User.LoginUserDTO;
+import com.cloudbalance.DTO.User.*;
 //import com.cloudbalance.Entity.UserEntity;
-import com.cloudbalance.DTO.User.ResponseUserDTO;
-import com.cloudbalance.DTO.User.UpdateUserDTO;
 import com.cloudbalance.Service.UserService;
+import com.cloudbalance.Utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
 public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
 
 //    login
     @PostMapping("/login")
@@ -48,4 +51,6 @@ public class UserController {
     public ResponseEntity<ResponseUserDTO> specificUser(@PathVariable  Long id){
         return new ResponseEntity<>(userService.getspecificUser(id),HttpStatus.OK);
     }
+
+
 }
