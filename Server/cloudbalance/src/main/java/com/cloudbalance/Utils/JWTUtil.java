@@ -2,6 +2,8 @@ package com.cloudbalance.Utils;
 
 
 import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,4 +43,25 @@ public class JWTUtil {
                 .getBody()
                 .getSubject();
     }
+
+
+//    checking for user validation
+public Date validationAuthToken(String token) {
+    try {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+
+    } catch (ExpiredJwtException e) {
+        throw new RuntimeException("Token expired");
+
+    } catch (JwtException e) {
+        throw new RuntimeException("Invalid token");
+    }
 }
+
+}
+
