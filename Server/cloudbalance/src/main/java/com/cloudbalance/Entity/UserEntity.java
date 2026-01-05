@@ -1,6 +1,7 @@
 package com.cloudbalance.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,10 +53,10 @@ public class UserEntity implements UserDetails {
 
 
 //    mapping user and account onboarding
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
             @JoinTable(name = "user_onboarding_accounts",
                     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                     inverseJoinColumns = @JoinColumn(name = "onboarding_account_id", referencedColumnName = "id"))
-   private List<OnboardingAccountEntity> onboardingAccountEntities=new ArrayList<>();;
+   private List<OnboardingAccountEntity> onboardingAccountEntities=new ArrayList<>();
 
 }

@@ -30,9 +30,9 @@ public class OnBoardingAccountController {
     }
 
 
-    @PostMapping("/assign")
-    public ResponseEntity<String> assignAccount(@RequestBody AccountAssignDTO account){
-        onBoardingAccountService.assignAccount(account);
-        return new ResponseEntity<>("Account assigned successfully", HttpStatus.OK);
-    }
+//    @PostMapping("/assign")
+//    public ResponseEntity<String> assignAccount(@RequestBody AccountAssignDTO account){
+//        onBoardingAccountService.assignAccount(account);
+//        return new ResponseEntity<>("Account assigned successfully", HttpStatus.OK);
+//    }
 }

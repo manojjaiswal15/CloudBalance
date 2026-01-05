@@ -15,7 +15,6 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 //   return async (dispatch) => {
 //   try {
 //     const response = await axios.post(`${user_base_url}/login`, { email, password });
-//     console.log("@@@result");
 
 //     console.log(response.data)
 //     const { firstName, role } = response.data;

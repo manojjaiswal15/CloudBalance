@@ -1,5 +1,6 @@
 package com.cloudbalance.Controller;
 
+import com.cloudbalance.DTO.Onboarding.UserAddAccountOnboarding;
 import com.cloudbalance.DTO.User.*;
 //import com.cloudbalance.Entity.UserEntity;
 import com.cloudbalance.Service.UserService;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,6 +22,7 @@ public class UserController {
     private JWTUtil jwtUtil;
 
 
+
 //    login
     @PostMapping("/login")
     public ResponseEntity<LoginResponseJWTDTO> login(@RequestBody LoginUserDTO loginUser){
@@ -30,13 +31,13 @@ public class UserController {
 
 //     users Add
     @PostMapping("/add")
-    public ResponseEntity<ResponseUserDTO> addUser(@RequestBody UpdateUserDTO userDTO){
-        return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.CREATED);
+    public ResponseEntity<ResponseUserDTO> addUser(@RequestBody UserAddAccountOnboarding userDTO) {
+        return ResponseEntity.ok(userService.addUser(userDTO));
     }
 
 //    user update
     @PutMapping("edit/{id}")
-    public ResponseEntity<ResponseUserDTO> editUser(@RequestBody UpdateUserDTO userDTO, @PathVariable Long id){
+    public ResponseEntity<ResponseUserDTO> editUser(@RequestBody UserAddAccountOnboarding userDTO, @PathVariable Long id){
         return new ResponseEntity<>(userService.editUser(userDTO,id),HttpStatus.OK);
     }
 

@@ -2,6 +2,7 @@ import axios from "axios";
 
 
 export const user_base_url="http://localhost:8080/admin"
+export const account_base_url="http://localhost:8080/onboarding"
 
 // //  user table details
 // export async function userTableDetails() {

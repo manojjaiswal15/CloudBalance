@@ -1,7 +1,6 @@
 package com.cloudbalance.Entity;
 
 
-import com.cloudbalance.DTO.Onboarding.ResponseAddAccountDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,6 @@
 package com.cloudbalance.Utils;
 
 
-import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

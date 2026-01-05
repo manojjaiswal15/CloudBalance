@@ -23,6 +23,8 @@ export const page1={
   ]
 }
 
+export const onboardingAccountTableHeading=["Id","ARN","Account Id","Account Name"]
+
  export const copyToClipboard = async (text) => {
         try {
            await navigator.clipboard.writeText(String(text) ?? '');

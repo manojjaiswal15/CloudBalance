@@ -3,7 +3,7 @@ import Logo from '../assets/logo/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../store/userReducer/userAction'
+import { login, logout } from '../store/userReducer/userAction'
 
 const Login = () => {
     const [loginDetails, setLoginDetails] = useState({
@@ -52,6 +52,8 @@ const Login = () => {
     useEffect(() => {
         if (error) {
             toast.error(error);
+            navigate('/')
+            dispatch(logout())
         }
     }, [error]);
 
