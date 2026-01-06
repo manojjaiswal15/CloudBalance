@@ -29,10 +29,10 @@ public class OnBoardingAccountController {
         return new ResponseEntity<>(onBoardingAccountService.getAllAccount(),HttpStatus.OK);
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getAllAssignAccountPerUser(@PathVariable Long id){
+        return  new ResponseEntity<>(onBoardingAccountService.getAllAssignAccountPerUser(id),HttpStatus.OK);
+    }
 
-//    @PostMapping("/assign")
-//    public ResponseEntity<String> assignAccount(@RequestBody AccountAssignDTO account){
-//        onBoardingAccountService.assignAccount(account);
-//        return new ResponseEntity<>("Account assigned successfully", HttpStatus.OK);
-//    }
+
 }

@@ -2,9 +2,7 @@ package com.cloudbalance.Controller;
 
 import com.cloudbalance.DTO.Onboarding.UserAddAccountOnboarding;
 import com.cloudbalance.DTO.User.*;
-//import com.cloudbalance.Entity.UserEntity;
 import com.cloudbalance.Service.UserService;
-import com.cloudbalance.Utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +15,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private JWTUtil jwtUtil;
 
 
 

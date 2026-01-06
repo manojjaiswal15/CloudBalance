@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { account_base_url } from '../../../Service/authService';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 const AddUser = () => {
 
@@ -141,17 +142,19 @@ const AddUser = () => {
                     <div className='mt-5'>
                         {
                             adduserData.role === "customer" ?
-                                <div className='flex items-center justify-between gap-4 w-[800px] border px-4 py-2'>
+                                <div className='flex items-center justify-between gap-10 w-[1000px] px-4 py-2'>
                                     {/* left side */}
-                                    <div className="border w-1/2 p-3">
-                                        <h3 className="font-semibold mb-2">Onboarding Accounts</h3>
+                                    <div className="shadow-2xl rounded-2xl border border-gray-100 w-1/2">
+                                        <div className='bg-sky-300 w-full px-2 py-3 text-center rounded-t-2xl'>
+                                            <h3 className="font-semibold mb-2">Onboarding Accounts</h3>
+                                        </div>
 
                                         <div className="h-64 overflow-y-auto">
                                             {
-                                                onboardingAccoutList.map((item) => (
-                                                    <label key={item.id} className="flex items-center gap-2 mb-2 cursor-pointer" >
-                                                        <input type="checkbox" checked={selectedAccounts.some(acc => acc.id === item.id)} onChange={() => handleAccountToggle(item)} />
-                                                        <span>{item.accountName}</span>
+                                                onboardingAccoutList.map((item,index) => (
+                                                    <label key={item.id} className={`${index%2==0 ? 'bg-gray-300': 'bg-white'} flex items-center gap-2 mb-2 pl-4 cursor-pointer w-full h-10`} >
+                                                        <input className='w-5 h-4' type="checkbox" checked={selectedAccounts.some(acc => acc.id === item.id)} onChange={() => handleAccountToggle(item)} />
+                                                        <span className='text-lg'>{item.accountName}</span>
                                                     </label>
                                                 ))}
                                         </div>
@@ -159,29 +162,33 @@ const AddUser = () => {
 
 
                                     {/* right side */}
-                                    <div className="border w-1/2 p-3">
-                                        <h3 className="font-semibold mb-2">Selected Accounts</h3>
+                                    <div className="shadow-2xl rounded-2xl border border-gray-100 w-1/2">
+                                       <div className='bg-sky-300 w-full px-2 py-3  text-center rounded-t-2xl'>
+                                         <h3 className="font-semibold mb-2">Selected Accounts</h3>
+                                       </div>
 
                                         <div className="h-64 overflow-y-auto">
                                             {selectedAccounts.length > 0 ? (
-                                                selectedAccounts.map((item) => (
-                                                    <div
-                                                        key={item.id}
-                                                        className="p-2 border-b text-gray-700"
-                                                    >
+                                                selectedAccounts.map((item,index) => (
+                                                    <div key={item.id}  className={`${index%2==0 ? 'bg-gray-300': 'bg-white'} flex items-center gap-2 mb-2 pl-4 cursor-pointer w-full h-10`}   >
                                                         {item.accountName}
                                                     </div>
                                                 ))
-                                            ) : (
-                                                <p className="text-sm text-gray-400">
-                                                    No account selected
-                                                </p>
-                                            )}
+                                            ) : 
+                                             (
+                                                        <div className='flex flex-col py-4 justify-center items-center gap-6'>
+                                                            <div className='flex flex-col items-center justify-center'>
+                                                                <FolderOpenIcon style={{ fontSize: "100px", fontWeight: "200" }} />
+                                                                <h3 className='text-2xl font-medium'>No Account ID's Added</h3>
+                                                            </div>
+                                                            <p className='text-base text-gray-600 '>Selected Account IDs will be shown here</p>
+
+                                                        </div>
+                                                    )
+                                            
+                                            }
                                         </div>
                                     </div>
-
-
-
                                 </div>
                                 : null
                         }

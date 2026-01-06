@@ -11,6 +11,7 @@ import com.cloudbalance.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +20,8 @@ public class OnBoardingAccountService {
     @Autowired
     private OnBoardingAccountRepository onBoardingAccountRepository;
 
-
+   @Autowired
+   private UserRepository userRepository;
 
 
     public ResponseAddAccountDTO addAccount(RequestAddAccountDTO requestAddAccountDTO) {
@@ -44,5 +46,19 @@ public class OnBoardingAccountService {
                 .map(ResponseAddAccountDTO::getConvertEntityToDTO).toList();
     }
 
+
+//    get per customer all assign account detail
+public AccountAssignDTO getAllAssignAccountPerUser(Long id) {
+
+    UserEntity user = userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    List<Long> allAccount = user.getOnboardingAccountEntities()
+            .stream()
+            .map(OnboardingAccountEntity::getId)
+            .toList();
+
+    return new AccountAssignDTO(user.getId(), allAccount);
+}
 
 }

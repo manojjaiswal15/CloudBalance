@@ -1,11 +1,9 @@
 package com.cloudbalance.Service;
 
-import com.cloudbalance.DTO.Onboarding.AccountAssignDTO;
 import com.cloudbalance.DTO.Onboarding.UserAddAccountOnboarding;
 import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
 import com.cloudbalance.DTO.User.LoginUserDTO;
 import com.cloudbalance.DTO.User.ResponseUserDTO;
-import com.cloudbalance.DTO.User.RequestUserDTO;
 import com.cloudbalance.Entity.OnboardingAccountEntity;
 import com.cloudbalance.Entity.UserEntity;
 import com.cloudbalance.Repository.OnBoardingAccountRepository;
@@ -21,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -123,6 +120,11 @@ public ResponseUserDTO addUser(UserAddAccountOnboarding userDTO) {
                     account.getUsers().add(user);
                 }
             }
+        }else{
+            user.getOnboardingAccountEntities().forEach(account->{
+                account.getUsers().remove(user);
+            });
+            user.getOnboardingAccountEntities().clear();
         }
 
         //  Save once at the end

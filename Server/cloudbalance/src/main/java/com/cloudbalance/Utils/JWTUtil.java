@@ -18,7 +18,7 @@ public class JWTUtil {
     @Value("${jwt.secretKey}")
     private String jwtSecretKey;
 
-    @Value(("${jwt.expiration}"))
+    @Value("${jwt.expiration}")
     private  Long expireTime;
 
     public SecretKey getSecretKey(){
@@ -43,24 +43,6 @@ public class JWTUtil {
                 .getSubject();
     }
 
-
-//    checking for user validation
-public Date validationAuthToken(String token) {
-    try {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSecretKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
-
-    } catch (ExpiredJwtException e) {
-        throw new RuntimeException("Token expired");
-
-    } catch (JwtException e) {
-        throw new RuntimeException("Invalid token");
-    }
-}
 
 }
 
