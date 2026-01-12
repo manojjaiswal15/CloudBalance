@@ -5,8 +5,11 @@ import { Outlet } from 'react-router-dom'
 import Footer from './Footer'
 
 
+
 const Dashboard = () => {
   const [sideclose, setSideClose] = useState(false);
+
+
   return (
     <div>
       <div className='flex flex-col '>

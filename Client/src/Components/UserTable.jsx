@@ -10,6 +10,7 @@ const UserTable = () => {
   const [userTableDetails, setUserTableDetails] = useState([]);
  
   const userToken=localStorage.getItem("token")
+  console.log("user details",user)
 
   useEffect(() => {
     async function userTableDetails() {

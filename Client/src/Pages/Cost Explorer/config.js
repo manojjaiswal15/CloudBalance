@@ -1,4 +1,20 @@
-export const GroupTabLabel=['Service','Instance Type','Account ID','Usage Type','Platform','Region','Usage Type Group','Purchase Operation','API Opeation','Resources','Charge Type','Availbilityzone','Tenacncy','Legal Entity','Billing Entity']
+import FusionCharts from "fusioncharts";
+import ReactFusioncharts from "react-fusioncharts"
+import Charts from "fusioncharts/fusioncharts.charts";
+import CandyTheme from "fusioncharts/themes/fusioncharts.theme.candy"
+import GammelTheme from "fusioncharts/themes/fusioncharts.theme.gammel"
+import UmberTheme from "fusioncharts/themes/fusioncharts.theme.umber"
+
+export default ReactFusioncharts.fcRoot(
+ FusionCharts,
+ Charts,
+ CandyTheme,
+ GammelTheme,
+ UmberTheme
+);
+
+
+export const GroupTabLabel=['Service','Instance Type','Usage Type','Platform','Region','Usage Type Group','Purchase Option','Resource','Account ID','Tenancy','Legal Entity','Billing Entity']
 
 
 export const dataSource = {

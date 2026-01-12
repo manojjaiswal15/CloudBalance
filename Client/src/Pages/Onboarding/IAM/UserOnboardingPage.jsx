@@ -9,7 +9,7 @@ import page3image1 from '../../../assets/onboarding/page3img1.png'
 import page3image2 from '../../../assets/onboarding/page3img2.png'
 import page3image3 from '../../../assets/onboarding/page3img3.png'
 import axios from 'axios';
-import { account_base_url } from '../../../Service/authService';
+import { account_base_url } from '../../../Service/service';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -121,8 +121,8 @@ const UserOnboardingSecondPage = ({ setIndexPage }) => {
     const navigate = useNavigate()
     return (
         <div className='bg-transparent gap-3 flex flex-col items-start py-6'>
-            <h3>Add Customer Managed Policies</h3>
-            <p>Create an Inline policy for the role by following these steps</p>
+            <h3 className='text-lg font-bold'>Add Customer Managed Policies</h3>
+            <p className='text-gray-600 text-base'> Create an Inline policy for the role by following these steps</p>
             {/* component */}
             <div className='bg-white border border-gray-300 rounded-md p-5 w-full flex flex-col items-start gap-4'>
                 <div className='flex items-center gap-3 flex-wrap w-full'>
@@ -184,8 +184,8 @@ const UserOnboardingThirdPage = ({ setIndexPage, onboardingAddAccountData }) => 
 
     return (
         <div className='bg-transparent gap-3 flex flex-col items-start py-6'>
-            <h3>Create Cost & Usage Report</h3>
-            <p>Create a Cost & Usage Report by following these steps</p>
+            <h3 className='text-lg font-bold'>Create Cost & Usage Report</h3>
+            <p className='text-gray-600 text-base'> Create a Cost & Usage Report by following these steps</p>
             {/* component */}
             <div className='bg-white border border-gray-300 rounded-md p-5 w-full flex flex-col items-start gap-4'>
                 <div className='flex items-center gap-3 flex-wrap w-full'>

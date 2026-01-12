@@ -1,17 +1,18 @@
-package com.cloudbalance.DTO.User;
+package com.cloudbalance.DTO.Onboarding;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponseJWTDTO {
+public class ResponseAssignAccountForCustomerRoleDTO {
     private Long id;
-    private String token;
-    private String firstName;
-    private String role;
+    private List<String> assignAccount;
 }

@@ -4,6 +4,7 @@ package com.cloudbalance.Service;
 import com.cloudbalance.DTO.Onboarding.AccountAssignDTO;
 import com.cloudbalance.DTO.Onboarding.RequestAddAccountDTO;
 import com.cloudbalance.DTO.Onboarding.ResponseAddAccountDTO;
+import com.cloudbalance.DTO.Onboarding.ResponseAssignAccountForCustomerRoleDTO;
 import com.cloudbalance.Entity.OnboardingAccountEntity;
 import com.cloudbalance.Entity.UserEntity;
 import com.cloudbalance.Repository.OnBoardingAccountRepository;
@@ -61,4 +62,15 @@ public AccountAssignDTO getAllAssignAccountPerUser(Long id) {
     return new AccountAssignDTO(user.getId(), allAccount);
 }
 
+//  this is for customer-role for (they are get assign account info)
+    public ResponseAssignAccountForCustomerRoleDTO getAllAssignAccountCustomerRole(Long id){
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<String> allAccount=user.getOnboardingAccountEntities().stream()
+                .map(onboardingAccountEntity -> onboardingAccountEntity.getAccountName())
+                .toList();
+
+        return new ResponseAssignAccountForCustomerRoleDTO(user.getId(), allAccount);
+    }
 }

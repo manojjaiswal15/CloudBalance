@@ -5,6 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CostServiceGraph from './CostServiceGraph';
 import { GroupTabLabel } from './config';
+import SideBarCostDetails from './SideBarCostDetails';
 
 
 const GroupTabGraph = () => {
@@ -13,6 +14,7 @@ const GroupTabGraph = () => {
   const [graphLabelSplit, setGraphLabelSplit] = useState([]);
   const [restgraphLabelSplit, setRestGraphLabelSplit] = useState([]);
   const [activeTab, setActiveTab] = useState(GroupTabLabel[0]);
+  const [selectType,setSelectType]=useState(activeTab.toLowerCase())
 
   // split tab label
   useEffect(() => {
@@ -20,8 +22,8 @@ const GroupTabGraph = () => {
     const VISIBLE_COUNT = 5;
     setGraphLabelSplit(remaining.slice(0, VISIBLE_COUNT));
     setRestGraphLabelSplit(remaining.slice(VISIBLE_COUNT));
+    setSelectType(activeTab.toLowerCase().trim().replaceAll(' ', '_'))
   }, [activeTab]);
-
 
   return (
     <div className='overflow-x-hidden'>
@@ -44,7 +46,7 @@ const GroupTabGraph = () => {
             }
             {/* after remain graph label */}
             <div onClick={() => setMoreDetails(!moreDetails)} className=' relative flex items-center text-blue-600'>More {moreDetails ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              <div className={`transform transition duration-300 ${moreDetails ? "bg-white flex flex-col h-[28vh] w-[8vw] z-50 absolute top-7 py-4 gap-3 text-center text-sm text-gray-600 list-none border border-gray-300 rounded " : "hidden"}`}>
+              <div className={`transform transition duration-300 ${moreDetails ? "bg-white flex flex-col h-[20vh] w-[8vw] z-50 absolute top-7 py-4 gap-3 text-center text-sm text-gray-600 list-none border border-gray-300 rounded " : "hidden"}`}>
                 {
                   restgraphLabelSplit.map((item) => {
                     return <li onClick={() => { setActiveTab(item) }} className='cursor-pointer'>{item}</li>
@@ -66,12 +68,15 @@ const GroupTabGraph = () => {
           </div>
         </div>
       </div>
+
       {/* layout */}
       <div className="flex w-full">
         {/* LEFT: Graph */}
-        <div className="flex-1 overflow-hidden">  <CostServiceGraph /> </div>
+        <div className="flex-1 overflow-hidden">  <CostServiceGraph  type={selectType}/> </div>
         {/* RIGHT: Sidebar */}
-        <div className={`bg-white border border-gray-300  transition-all duration-300 overflow-hidden   ${sliderDetails ? "w-[20vw]" : "w-0"}`} >hello</div>
+        <div className={`bg-white border border-gray-300  transition-all duration-300 overflow-hidden   ${sliderDetails ? "w-[20vw]" : "w-0"}`} >
+          <SideBarCostDetails/>
+        </div>
       </div>
 
     </div>

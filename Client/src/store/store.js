@@ -1,9 +1,13 @@
 import {applyMiddleware, combineReducers,createStore} from 'redux'
 import UserReducer from './userReducer/userReducer';
 import { thunk } from "redux-thunk";
+import { CostReducer } from './costReducer/costReducer';
+import { AccountReducer } from './accountIdReducer/AccountReducer';
 
 const rootReducer=combineReducers({
-    auth: UserReducer
+    auth: UserReducer,
+    cost: CostReducer,
+    account:AccountReducer
 })
 
 const store=createStore(rootReducer,applyMiddleware(thunk))

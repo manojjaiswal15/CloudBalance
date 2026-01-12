@@ -11,7 +11,10 @@ import com.cloudbalance.Repository.UserRepository;
 import com.cloudbalance.Utils.JWTUtil;
 
 import jakarta.transaction.Transactional;
+import net.snowflake.client.jdbc.internal.amazonaws.services.s3.transfer.internal.PresignedUrlRetryableDownloadTaskImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,65 +41,69 @@ public class UserService {
     private OnBoardingAccountRepository onBoardingAccountRepository;
 
 
+    //    login for users
+    public LoginResponseJWTDTO loginUser(LoginUserDTO users) {
+        UserEntity user = userRepository.findByEmail(users.getEmail()).orElseThrow(() -> new UsernameNotFoundException("Email not Register"));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getEmail(), users.getPassword())
+        );
 
+        String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
+        String firstName = user.getFirstName();
+        String role = user.getRole();
+        return new LoginResponseJWTDTO(user.getId(), token, firstName, role);
+    }
 
-//    login for users
-public LoginResponseJWTDTO loginUser(LoginUserDTO users){
-    UserEntity user= userRepository.findByEmail(users.getEmail()).orElseThrow(()->new UsernameNotFoundException("Email not Register"));
-    authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(user.getEmail(),users.getPassword())
-    );
-
-        String token= jwtUtil.generateToken(user.getUsername());
-        String firstName=user.getFirstName();
-        String role=user.getRole();
-    return new LoginResponseJWTDTO(token,firstName,role);
-}
-
-//    add user
-@Transactional
-public ResponseUserDTO addUser(UserAddAccountOnboarding userDTO) {
+    //    add user
+    @Transactional
+    public ResponseEntity<ResponseUserDTO> addUser(UserAddAccountOnboarding userDTO) {
 
 //    UserEntity userExists = userRepository.findByEmail(userDTO.getEmail()).orElseThrow();
 //    if(userExists!=null){
 //        throw new RuntimeException("User already exists");
 //    }
-
-    // Create User
-    UserEntity user = new UserEntity();
-    user.setEmail(userDTO.getEmail());
-    user.setFirstName(userDTO.getFirstName());
-    user.setLastName(userDTO.getLastName());
-    user.setRole(userDTO.getRole());
-    user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
-    // Save user once
-    UserEntity savedUser = userRepository.save(user);
-
-    // Assign onboarding accounts ONLY for customer
-    if ("customer".equalsIgnoreCase(savedUser.getRole())) {
-
-        List<OnboardingAccountEntity> accounts = onBoardingAccountRepository.findAllById(userDTO.getAccountId());
-        if (accounts.isEmpty()) {
-            throw new RuntimeException("Account not found");
+        if (userDTO.getFirstName().isEmpty() || userDTO.getLastName().isEmpty() || userDTO.getEmail().isEmpty() || userDTO.getPassword().isEmpty()
+                || userDTO.getRole().isEmpty() || userDTO.getAccountId().isEmpty()) {
+//        throw new I("Invalid Credentials");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        for (OnboardingAccountEntity account : accounts) {
-            savedUser.getOnboardingAccountEntities().add(account);
-            account.getUsers().add(savedUser);
+
+
+        // Create User
+        UserEntity user = new UserEntity();
+        user.setEmail(userDTO.getEmail());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setRole(userDTO.getRole());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        // Save user once
+        UserEntity savedUser = userRepository.save(user);
+
+        // Assign onboarding accounts ONLY for customer
+        if ("customer".equalsIgnoreCase(savedUser.getRole())) {
+
+            List<OnboardingAccountEntity> accounts = onBoardingAccountRepository.findAllById(userDTO.getAccountId());
+            if (accounts.isEmpty()) {
+                throw new RuntimeException("Account not found");
+            }
+            for (OnboardingAccountEntity account : accounts) {
+                savedUser.getOnboardingAccountEntities().add(account);
+                account.getUsers().add(savedUser);
+            }
         }
+        //Save once more to update join table
+        UserEntity finalUser = userRepository.save(savedUser);
+        return ResponseEntity.ok(ResponseUserDTO.fromEntity(finalUser));
     }
-    //Save once more to update join table
-    UserEntity finalUser = userRepository.save(savedUser);
-    return ResponseUserDTO.fromEntity(finalUser);
-}
 
 
-//edit user
+    //edit user
     @Transactional
     public ResponseUserDTO editUser(UserAddAccountOnboarding edituser, Long id) {
-     UserEntity user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-     //  Update basic fields
+        //  Update basic fields
         user.setEmail(edituser.getEmail());
         user.setFirstName(edituser.getFirstName());
         user.setLastName(edituser.getLastName());
@@ -120,8 +127,8 @@ public ResponseUserDTO addUser(UserAddAccountOnboarding userDTO) {
                     account.getUsers().add(user);
                 }
             }
-        }else{
-            user.getOnboardingAccountEntities().forEach(account->{
+        } else {
+            user.getOnboardingAccountEntities().forEach(account -> {
                 account.getUsers().remove(user);
             });
             user.getOnboardingAccountEntities().clear();
@@ -134,21 +141,18 @@ public ResponseUserDTO addUser(UserAddAccountOnboarding userDTO) {
     }
 
 
-
-
-//    alluser
+    //    alluser
     public List<ResponseUserDTO> getAllUser() {
         return userRepository.findAll()
                 .stream()
                 .map(ResponseUserDTO::fromEntity)
                 .toList();
     }
-//    specific user
-    public ResponseUserDTO getspecificUser(Long id){
-        UserEntity user=userRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("This User not Exists..."));
+
+    //    specific user
+    public ResponseUserDTO getspecificUser(Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("This User not Exists..."));
         return ResponseUserDTO.fromEntity(user);
     }
-
-
 
 }

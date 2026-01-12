@@ -19,6 +19,7 @@ const UserReducer = (state = initialState, action) => {
                 JSON.stringify({
                     firstName: action.payload.user.firstName,
                     role: action.payload.user.role,
+                    id:action.payload.user.id
                 })
             );
             return {
@@ -26,6 +27,7 @@ const UserReducer = (state = initialState, action) => {
                 user: {
                     firstName: action.payload.user.firstName,
                     role: action.payload.user.role,
+                    id: action.payload.user.id
                 },
                 token: action.payload.user.token,
                 isAuthenticated: true,
@@ -43,6 +45,7 @@ const UserReducer = (state = initialState, action) => {
                 token: null,
                 isAuthenticated: false,
             };
+        
 
         default:
             return state;

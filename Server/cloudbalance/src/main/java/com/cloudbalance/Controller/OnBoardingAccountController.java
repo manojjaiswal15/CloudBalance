@@ -34,5 +34,9 @@ public class OnBoardingAccountController {
         return  new ResponseEntity<>(onBoardingAccountService.getAllAssignAccountPerUser(id),HttpStatus.OK);
     }
 
+    @GetMapping("/assignaccount/{id}")
+    public ResponseEntity<?> getAllAssignAccountCustomerRole(@PathVariable Long id) {
+        return new ResponseEntity<>(onBoardingAccountService.getAllAssignAccountCustomerRole(id), HttpStatus.OK);
+    }
 
 }

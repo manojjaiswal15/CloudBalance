@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { user_base_url } from '../../../Service/authService';
+import { user_base_url } from '../../../Service/service';
 import { toast } from 'react-toastify';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const EditUser = () => {
     const [edituserData, seteditUserData] = useState({
@@ -151,34 +153,44 @@ const EditUser = () => {
                     <div className='mt-5'>
                         {
                             edituserData.role === "customer" ?
-                                <div className='flex items-center justify-between gap-10 w-[1000px] px-4 py-2'>
+                                <div className='flex items-center justify-between gap-10 w-[1000px] py-2'>
                                     {/* left side */}
-                                    <div className="shadow-2xl rounded-2xl border border-gray-100 w-1/2">
-                                        <div className='bg-sky-300 w-full px-2 py-3 text-center rounded-t-2xl'>
-                                            <h3 className="font-semibold mb-2">Onboarding Accounts</h3>
+                                    <div className="rounded-md border border-gray-300 w-1/2">
+                                        <div className='bg-sky-200 w-full px-2 py-3 flex justify-between rounded-t-md'>
+                                            <h3 className="font-semibold mb-2">Choose Account ID's to Associate</h3>
+                                            <h3>{allOnboardingAcount.length} Available</h3>
                                         </div>
 
                                         <div className="h-64 overflow-y-auto">
                                             {
                                                 allOnboardingAcount.map((item, index) => (
-                                                    <label key={item.id} className={`${index % 2 == 0 ? 'bg-gray-300' : 'bg-white'} flex items-center gap-2 mb-2 pl-4 cursor-pointer w-full h-10`} >
+                                                    <label key={item.id} className={`${index % 2 == 0 ? 'bg-gray-200' : 'bg-white'} flex items-center gap-2 mb-2 pl-4 cursor-pointer w-full h-10`} >
                                                         <input className='w-5 h-4' type="checkbox" checked={selectedOnboardingAccount.includes(item.id)} onChange={() => handleAccountToggle(item.id)} />
                                                         <span className='text-lg'>{item.accountName}</span>
                                                     </label>
                                                 ))}
                                         </div>
                                     </div>
+                                    <div className='flex flex-col gap-10'>
+                                        {/* left button */}
+                                        <div className=' w-10 h-10 rounded-full bg-gray-600 text-white flex items-center justify-center'>
+                                            <ArrowForwardIcon/>
+                                        </div>
+                                        {/* right button */}
+                                        <div className=' w-10 h-10 rounded-full bg-gray-600 text-white flex items-center justify-center'><ArrowBackIcon/></div>
+                                    </div>
 
                                     {/* right side */}
-                                    <div className="shadow-2xl rounded-2xl border border-gray-100 w-1/2">
-                                        <div className='bg-sky-300 w-full px-2 py-3  text-center rounded-t-2xl'>
-                                            <h3 className="font-semibold mb-2">Selected Accounts</h3>
+                                    <div className="rounded-md border border-gray-300 w-1/2">
+                                        <div className='bg-sky-200 w-full px-2 py-3  flex justify-between rounded-t-md'>
+                                            <h3 className="font-semibold mb-2">Associate Accounts ID's</h3>
+                                            <h3>{selectedOnboardingAccount.length} Available</h3>
                                         </div>
 
                                         <div className="h-64 overflow-y-auto">
                                             {
                                                 selectedOnboardingAccount.length > 0 ? (allOnboardingAcount.filter(acc => selectedOnboardingAccount.includes(acc.id)).map((item, index) => (
-                                                    <div key={item.id} className={`${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} flex items-center gap-2 mb-2 pl-4 w-full h-10`}>
+                                                    <div key={item.id} className={`${index % 2 === 0 ? 'bg-gray-200' : 'bg-white'} flex items-center gap-2 mb-2 pl-4 w-full h-10`}>
                                                         {item.accountName}
                                                     </div>
                                                 ))

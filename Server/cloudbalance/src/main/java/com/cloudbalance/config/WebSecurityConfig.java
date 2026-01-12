@@ -37,7 +37,8 @@ public class WebSecurityConfig {
                 .cors(c -> c.configurationSource(corsConfig.corsFilter()))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/admin/add", "/admin/edit/**","/onboarding/add","/onboarding/assign").hasRole("admin")
-                                .requestMatchers("/admin/users").hasAnyRole("admin", "readonly")
+                                .requestMatchers("/admin/users","/onboarding/allaccounts").hasAnyRole("admin", "readonly")
+                                .requestMatchers("/onboarding/assignaccount/*").hasRole("customer")
                                 .requestMatchers("/admin/login").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 .anyRequest().authenticated()
