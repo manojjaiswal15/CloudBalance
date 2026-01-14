@@ -32,7 +32,7 @@ public class GlobalException {
     }
 
     @ExceptionHandler(EmailAlreadyInUsedException.class)
-    public ResponseEntity<ErrorResponseDTO> handleRuntimeException(EmailAlreadyInUsedException ex) {
+    public ResponseEntity<ErrorResponseDTO> handleEmailAlreadyInUsedException(EmailAlreadyInUsedException ex) {
         return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage(), 409), HttpStatus.CONFLICT);
     }
 

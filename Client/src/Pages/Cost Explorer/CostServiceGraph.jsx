@@ -12,6 +12,7 @@ import { cost_base_url } from '../../Service/service';
 import { costAllData } from "../../store/costReducer/costAction"
 import useBuildFusionDataSource from '../../Hook/useBuildFusionDataSource';
 import Table from '../../Components/Cost/Table';
+import Loading from '../../Components/Loading/Loading';
 
 
 charts(FusionCharts);
@@ -36,7 +37,6 @@ const CostServiceGraph = ({type,start,end}) => {
           Authorization:`Bearer ${token}`
         }
       })
-      console.log(res.data)
       dispatch(costAllData(res.data))
       setIsLoading(false)
      } catch (error) {
@@ -63,7 +63,7 @@ const CostServiceGraph = ({type,start,end}) => {
         </div>
       </div>
         <div className='w-full border-gray-300 border py-2'>
-            { isLoading? <div>loading......</div> : <ReactFusioncharts width={"100%"}   height="500"  type={chartActive}   dataFormat="JSON"   dataSource={datasource}   />} 
+            { isLoading ? <Loading/> : <ReactFusioncharts width={"100%"}   height="500"  type={chartActive}   dataFormat="JSON"   dataSource={datasource}   />} 
         </div>
 
 

@@ -48,7 +48,7 @@ const GroupTabGraph = () => {
             }
             {/* after remain graph label */}
             <div onClick={() => setMoreDetails(!moreDetails)} className=' relative flex items-center text-blue-600'>More {moreDetails ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              <div className={`transform transition duration-300 ${moreDetails ? "bg-white flex flex-col h-[20vh] w-[8vw] z-50 absolute top-7 py-4 gap-3 text-center text-sm text-gray-600 list-none border border-gray-300 rounded " : "hidden"}`}>
+              <div className={`transform transition duration-300 ${moreDetails ? "bg-white flex flex-col h-[17vh] w-[8vw] z-50 absolute top-7 py-4 gap-3 text-center text-sm text-gray-600 list-none border border-gray-300 rounded " : "hidden"}`}>
                 {
                   restgraphLabelSplit.map((item) => {
                     return <li onClick={() => { setActiveTab(item) }} className='cursor-pointer'>{item}</li>

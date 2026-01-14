@@ -8,9 +8,8 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post( `${user_base_url}/login`, { email, password });
-      console.log(response)
-      
+      const response = await axios.post( `${user_base_url}/login`, { email, password });  
+          
        if (!response.data) {
         throw new Error("Invalid credentials");
       }

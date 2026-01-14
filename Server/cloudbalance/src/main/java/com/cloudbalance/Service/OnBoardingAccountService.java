@@ -27,7 +27,7 @@ public class OnBoardingAccountService {
     public ResponseAddAccountDTO addAccount(RequestAddAccountDTO requestAddAccountDTO) {
         String arn = onBoardingAccountRepository.findByArn(requestAddAccountDTO.getArn());
         if (arn != null) {
-            throw new RuntimeException("Already Account Added!!!!");
+            throw new IllegalArgumentException("Already Account Added!!!!");
         }
 //        adding the account using object
         OnboardingAccountEntity newAccount = new OnboardingAccountEntity();

@@ -11,7 +11,7 @@ const useBuildFusionDataSource = (costdata) => {
   return useMemo(() => {
     if (!Array.isArray(costdata) || costdata.length === 0) return null;
 
-    // 🔹 Get month keys dynamically from monthCost
+    //  Get month keys dynamically from monthCost
     const monthKeys = Object.keys(costdata[0].monthCost || {});
 
     return {

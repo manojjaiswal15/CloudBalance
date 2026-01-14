@@ -3,16 +3,18 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Loading from "./Loading/Loading";
 
 const UserTable = () => {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
   const [userTableDetails, setUserTableDetails] = useState([]);
+  const [isLoading,setIsLoading]=useState(false)
  
   const userToken=localStorage.getItem("token")
-  console.log("user details",user)
 
   useEffect(() => {
+    setIsLoading(true)
     async function userTableDetails() {
       try {
         const response = await axios.get(
@@ -27,11 +29,12 @@ const UserTable = () => {
         console.error("Failed to fetch users", error);
       }
     }
+    setIsLoading(false)
     userTableDetails();
   }, []);
 
   return (
-    <div className="p-4 bg-white overflow-y-auto" style={{ maxHeight: "60vh" }}>
+   isLoading ? <div> <Loading/> </div> : <div className="p-4 bg-white overflow-y-auto" style={{ maxHeight: "60vh" }}>
       <table className="w-full">
         <thead className="bg-sky-200">
           <tr className="border-e">

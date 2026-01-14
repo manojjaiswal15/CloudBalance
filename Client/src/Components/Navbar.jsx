@@ -33,39 +33,39 @@ const Navbar = ({ sideclose, setSideClose }) => {
     }
 
 
-
     useEffect(() => {
-        async function getAllAccountIdFromSnowflake() {
-            if(user.role=='customer'){
-                const res=await axios.get(`${account_base_url}/assignaccount/${user.id}`,{
-                    headers:{
-                         Authorization: `Bearer ${token}`
-                    }
-                })
-                 dispatch(accountId(res.data.assignAccount));
-            setCurrentAccoundId(res.data.assignAccount[0])
-            // dispatch(accountPerUser(accountId))
-            if (currentAccountId) {
-                dispatch(accountPerUser(currentAccountId));
-            }
-            }
-           else{
-             const res = await axios.get(`${cost_base_url}/allaccounts`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-             dispatch(accountId(res.data.accountid));
-            setCurrentAccoundId(res.data.accountid[0])
-            // dispatch(accountPerUser(accountId))
-            if (currentAccountId) {
-                dispatch(accountPerUser(currentAccountId));
-            }
-           }
-           
-        }
-        getAllAccountIdFromSnowflake();
-    }, [dispatch, currentAccountId]);
+  async function getAllAccountIdFromSnowflake() {
+    if (user.role === 'customer') {
+      const res = await axios.get(
+        `${account_base_url}/assignaccount/${user.id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      dispatch(accountId(res.data.assignAccount));
+      dispatch(accountPerUser(currentAccountId));
+      //  set default only if not already selected
+      if (!currentAccountId && res.data.assignAccount.length > 0) {
+        setCurrentAccoundId(res.data.assignAccount[0]);
+      }
+    } else {
+      const res = await axios.get(
+        `${cost_base_url}/allaccounts`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      dispatch(accountId(res.data.accountid));
+       dispatch(accountPerUser(currentAccountId));
+
+      if (!currentAccountId && res.data.accountid.length > 0) {
+        setCurrentAccoundId(res.data.accountid[0]);
+      }
+    }
+  }
+
+  getAllAccountIdFromSnowflake();
+}, [currentAccountId,dispatch]);
+
+
 
 
     return (

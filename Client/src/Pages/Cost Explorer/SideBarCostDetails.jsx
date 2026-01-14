@@ -4,6 +4,7 @@ import { GroupTabLabel } from './config'
 import axios from 'axios'
 import { cost_base_url } from '../../Service/service'
 import { costAllData } from '../../store/costReducer/costAction'
+import Loading from '../../Components/Loading/Loading'
 
 const SideBarCostDetails = ({start,end}) => {
     // this is for side type like 
@@ -13,6 +14,7 @@ const SideBarCostDetails = ({start,end}) => {
     // activeFitler to get sub part ec2,lamba
     const [selectSubType, setSelectSubType] = useState([]);
      const {accountPerUserData}=useSelector(state=>state.accountperuser)
+     const [isLoading,setIsLoading]=useState(false)
     const dispatch = useDispatch()
 
 
@@ -30,6 +32,7 @@ const SideBarCostDetails = ({start,end}) => {
     }
 
     async function syncSideBarToCostData(item) {
+        setIsLoading(true)
         setActiveFilter(prev => (prev === item ? null : item));
         const items = item.toLowerCase().trim().replace(/\s+/g, "_");
         const res = await axios.get(`${cost_base_url}/filters?filter=${items}`, {
@@ -38,6 +41,7 @@ const SideBarCostDetails = ({start,end}) => {
             }
         })
         setSideSubType(res.data)
+        setIsLoading(false)
     }
 
     function selectedSubTypeValue(value) {
@@ -63,6 +67,13 @@ const SideBarCostDetails = ({start,end}) => {
             setSelectSubType([...sideSubType]);
         }
     }
+
+    function closeSidebar() {
+  setActiveFilter(null);
+  setSideSubType([]);
+  setSelectSubType([]);
+  setIsLoading(false);
+}
 
 
 
@@ -97,7 +108,8 @@ const SideBarCostDetails = ({start,end}) => {
                                     </label>
 
                                 </div>
-                                {sideSubType.map((items) => (
+                                {/* loading  */}
+                                {isLoading ?  <div> <Loading/></div> : sideSubType.map((items) => (
                                     <label key={items} className="flex items-center gap-2 text-sm">
                                         <input onChange={() => selectedSubTypeValue(items)} checked={selectSubType.includes(items)} name="subtypevaluegraph" type="checkbox" value={items} />
                                         {items}
@@ -106,7 +118,7 @@ const SideBarCostDetails = ({start,end}) => {
                                 <div>
                                 </div>
                                 <div className='sticky bottom-0 bg-white border-t border-t-gray-200 flex items-end justify-end gap-4 py-2'>
-                                    <button className='px-3 py-1 text-sky-600 rounded border border-sky-600 cursor-pointer'>Close</button>
+                                    <button onClick={closeSidebar} className='px-3 py-1 text-sky-600 rounded border border-sky-600 cursor-pointer'>Close</button>
                                     <button onClick={getCostByFilterAndType} className='px-3 py-1 rounded bg-sky-600 text-white cursor-pointer'>Apply</button>
                                 </div>
                             </div>
