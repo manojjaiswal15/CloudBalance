@@ -51,7 +51,7 @@ const CostServiceGraph = ({type,start,end}) => {
   const datasource=useBuildFusionDataSource(costdata);
   
   return (
-   isLoading? <div>loading......</div> : <div className=' bg-white w-full  px-4 '>
+   <div className=' bg-white w-full  px-4 '>
       <div className='bg-white flex justify-between items-center p-4  '>
         {/* heading */}
           <h2 className='text-gray-600 text-base'>Cost</h2>
@@ -63,7 +63,7 @@ const CostServiceGraph = ({type,start,end}) => {
         </div>
       </div>
         <div className='w-full border-gray-300 border py-2'>
-             <ReactFusioncharts width={"100%"}   height="500"  type={chartActive}   dataFormat="JSON"   dataSource={datasource}   />
+            { isLoading? <div>loading......</div> : <ReactFusioncharts width={"100%"}   height="500"  type={chartActive}   dataFormat="JSON"   dataSource={datasource}   />} 
         </div>
 
 

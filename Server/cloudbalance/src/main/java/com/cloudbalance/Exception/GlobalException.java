@@ -26,6 +26,15 @@ public class GlobalException {
         return new ResponseEntity<>(new ErrorResponseDTO("JWT Expired Token", 401), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage(), 400), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailAlreadyInUsedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleRuntimeException(EmailAlreadyInUsedException ex) {
+        return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage(), 409), HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception ex) {

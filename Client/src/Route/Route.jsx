@@ -14,6 +14,7 @@ import ASGDetails from '../Pages/AWS/ASG/ASGDetails'
 import ProtectedRoute from './ProtectedRoute'
 import UserOnboardingPage from '../Pages/Onboarding/IAM/UserOnboardingPage'
 import { useSelector } from 'react-redux'
+import NotFound from '../Pages/NotFound/NotFound'
 
 
 const Route = () => {
@@ -78,6 +79,10 @@ const Route = () => {
         }
         
       ]
+    },
+    {
+      path: '*',
+      element:<NotFound/>
     }
   ])
   return (

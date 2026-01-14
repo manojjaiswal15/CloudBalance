@@ -1,13 +1,12 @@
-
-
+import React, { useState } from 'react'
 
 const Table = ({ costdata, type }) => {
 
 
   function capitalizeFirstLetter(string) {
-  if (!string) return ""; 
-  return string.charAt(0).toUpperCase() + string.slice(1).replace("_"," ");
-}
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1).replace("_", " ");
+  }
 
   const months = [
     { key: "01-2025", label: "Jan 2025" },
@@ -18,7 +17,7 @@ const Table = ({ costdata, type }) => {
   ];
 
   const getTotal = (monthCost = {}) => Object.values(monthCost).reduce((sum, v) => sum + v, 0);
-  type=capitalizeFirstLetter(type)
+  type = capitalizeFirstLetter(type)
 
   return (
     <div className="py-5">

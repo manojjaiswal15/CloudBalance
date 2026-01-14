@@ -6,6 +6,7 @@ import com.cloudbalance.DTO.User.LoginUserDTO;
 import com.cloudbalance.DTO.User.ResponseUserDTO;
 import com.cloudbalance.Entity.OnboardingAccountEntity;
 import com.cloudbalance.Entity.UserEntity;
+import com.cloudbalance.Exception.EmailAlreadyInUsedException;
 import com.cloudbalance.Repository.OnBoardingAccountRepository;
 import com.cloudbalance.Repository.UserRepository;
 import com.cloudbalance.Utils.JWTUtil;
@@ -57,13 +58,13 @@ public class UserService {
     @Transactional
     public ResponseEntity<ResponseUserDTO> addUser(UserAddAccountOnboarding userDTO) {
 
-//    UserEntity userExists = userRepository.findByEmail(userDTO.getEmail()).orElseThrow();
-//    if(userExists!=null){
-//        throw new RuntimeException("User already exists");
-//    }
+    UserEntity userExists = userRepository.findByEmail(userDTO.getEmail()).orElseThrow();
+    if(userExists!=null){
+        throw new EmailAlreadyInUsedException("User already exists");
+    }
         if (userDTO.getFirstName().isEmpty() || userDTO.getLastName().isEmpty() || userDTO.getEmail().isEmpty() || userDTO.getPassword().isEmpty()
                 || userDTO.getRole().isEmpty() || userDTO.getAccountId().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            throw new IllegalArgumentException("All fields are required");
         }
 
 
@@ -99,8 +100,10 @@ public class UserService {
     //edit user
     @Transactional
     public ResponseUserDTO editUser(UserAddAccountOnboarding edituser, Long id) {
-        UserEntity user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-
+        UserEntity user = userRepository.findById(id).orElseThrow();
+        if(user!=null){
+            throw  new IllegalArgumentException("User not found");
+        }
         //  Update basic fields
         user.setEmail(edituser.getEmail());
         user.setFirstName(edituser.getFirstName());

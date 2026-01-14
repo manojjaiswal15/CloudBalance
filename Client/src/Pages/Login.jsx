@@ -42,11 +42,11 @@ const Login = () => {
 
     // }, [isAuthenticated, user, navigate]);
     useEffect(() => {
-  if (isAuthenticated) {
-     toast.success("Login Successfully");
-    navigate("/dashboard");
-  }
-}, [isAuthenticated,user]);
+        if (isAuthenticated) {
+            toast.success("Login Successfully");
+            navigate("/dashboard");
+        }
+    }, [isAuthenticated, user]);
 
 
     useEffect(() => {
