@@ -11,7 +11,6 @@ import com.cloudbalance.Repository.UserRepository;
 import com.cloudbalance.Utils.JWTUtil;
 
 import jakarta.transaction.Transactional;
-import net.snowflake.client.jdbc.internal.amazonaws.services.s3.transfer.internal.PresignedUrlRetryableDownloadTaskImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +63,6 @@ public class UserService {
 //    }
         if (userDTO.getFirstName().isEmpty() || userDTO.getLastName().isEmpty() || userDTO.getEmail().isEmpty() || userDTO.getPassword().isEmpty()
                 || userDTO.getRole().isEmpty() || userDTO.getAccountId().isEmpty()) {
-//        throw new I("Invalid Credentials");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 

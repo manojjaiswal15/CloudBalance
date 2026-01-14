@@ -15,6 +15,8 @@ const GroupTabGraph = () => {
   const [restgraphLabelSplit, setRestGraphLabelSplit] = useState([]);
   const [activeTab, setActiveTab] = useState(GroupTabLabel[0]);
   const [selectType,setSelectType]=useState(activeTab.toLowerCase())
+  const [startDate,setStartDate]=useState('2025-01-01')
+  const [endDate,setEndDate]=useState('2025-06-01')
 
   // split tab label
   useEffect(() => {
@@ -58,8 +60,13 @@ const GroupTabGraph = () => {
           {/* icons */}
           <div className='flex items-center gap-10'>
             {/* calender */}
-            <div className='p-3 border border-gray-300 rounded'>
-              <input className='outline-none bg-transparent ' type="date" />
+            <div className='p-1 border border-gray-300 rounded flex'>
+              <span className='-translate-y-4.5 bg-transparent'>From</span>
+              <input value={startDate} onChange={(e)=>setStartDate(e.target.value)} className='outline-none bg-transparent' name="start" type="date" />
+            </div>
+             <div className='p-1 border border-gray-300 rounded flex'>
+              <span className='-translate-y-4.5 bg-transparent'>To</span>
+              <input value={endDate} onChange={(e)=>setEndDate(e.target.value)}  className='outline-none bg-transparent' name="end" type="date" />
             </div>
             {/* swipe */}
             <div onClick={() => setSliderDetails(!sliderDetails)} className={`p-1 border border-blue-700 cursor-pointer`}>
@@ -72,10 +79,10 @@ const GroupTabGraph = () => {
       {/* layout */}
       <div className="flex w-full">
         {/* LEFT: Graph */}
-        <div className="flex-1 overflow-hidden">  <CostServiceGraph  type={selectType}/> </div>
+        <div className="flex-1 overflow-hidden">  <CostServiceGraph  type={selectType} start={startDate} end={endDate}/> </div>
         {/* RIGHT: Sidebar */}
         <div className={`bg-white border border-gray-300  transition-all duration-300 overflow-hidden   ${sliderDetails ? "w-[20vw]" : "w-0"}`} >
-          <SideBarCostDetails/>
+          <SideBarCostDetails start={startDate} end={endDate}/>
         </div>
       </div>
 

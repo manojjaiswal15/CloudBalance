@@ -42,10 +42,10 @@ const UserOnboarding = () => {
 
   return (
     <div className=''>
-      <h2>Account Onboarding</h2>
+      {/* <h2>Account Onboarding</h2> */}
       <div className='bg-white p-3 rounded-md'>
         <div className=' pb-3 flex items-center justify-between '>
-          <h2 className='text-lg font-semibold text-gray-700'>Onboarding Account List</h2>
+          <h2 className='text-xl font-bold text-gray-700'>Onboarding Account List</h2>
           <div className=''>
             {
               user.role === "admin" ? <button onClick={handleNavigate} className='bg-sky-700 text-white px-3 py-2 rounded text-center gap-2 cursor-pointer flex items-center'>Link Account<FolderOpenIcon /></button> : null

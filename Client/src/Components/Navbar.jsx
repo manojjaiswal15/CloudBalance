@@ -7,46 +7,66 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/userReducer/userAction'
 import { toast } from 'react-toastify';
-import { UserFetchAssignAccountContext } from '../Context/UserFetchAssignAccountContext';
+// import { UserFetchAssignAccountContext } from '../Context/UserFetchAssignAccountContext';
 import axios from 'axios';
-import { cost_base_url } from '../Service/service';
-import {accountId} from '../store/accountIdReducer/accountAction'
+import { account_base_url, cost_base_url } from '../Service/service';
+import { accountId, accountPerUser } from '../store/accountIdReducer/accountAction'
 
 
 const Navbar = ({ sideclose, setSideClose }) => {
 
     // const AssignAccount = useContext(UserFetchAssignAccountContext)
-
+    const [currentAccountId, setCurrentAccoundId] = useState(null)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {accountdata}=useSelector(state=>state.account)
+    const { accountdata } = useSelector(state => state.account)
     const user = JSON.parse(localStorage.getItem("user"))
-    const token=localStorage.getItem("token")
+    const token = localStorage.getItem("token")
+
 
     function LogoutHandle() {
         dispatch(logout())
-       
+
         navigate('/')
         toast.success("Logout SuccessFully")
 
     }
 
-   useEffect(() => {
-    async function getAllAccountIdFromSnowflake() {
-        const res = await axios.get(`${cost_base_url}/allaccounts`, {
-            headers: {
-                Authorization: `Bearer ${token}`
+
+
+    useEffect(() => {
+        async function getAllAccountIdFromSnowflake() {
+            if(user.role=='customer'){
+                const res=await axios.get(`${account_base_url}/assignaccount/${user.id}`,{
+                    headers:{
+                         Authorization: `Bearer ${token}`
+                    }
+                })
+                 dispatch(accountId(res.data.assignAccount));
+            setCurrentAccoundId(res.data.assignAccount[0])
+            // dispatch(accountPerUser(accountId))
+            if (currentAccountId) {
+                dispatch(accountPerUser(currentAccountId));
             }
-        });
-        dispatch(accountId(res.data.accountid));
-    }
+            }
+           else{
+             const res = await axios.get(`${cost_base_url}/allaccounts`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+             dispatch(accountId(res.data.accountid));
+            setCurrentAccoundId(res.data.accountid[0])
+            // dispatch(accountPerUser(accountId))
+            if (currentAccountId) {
+                dispatch(accountPerUser(currentAccountId));
+            }
+           }
+           
+        }
+        getAllAccountIdFromSnowflake();
+    }, [dispatch, currentAccountId]);
 
-    getAllAccountIdFromSnowflake();
-}, [dispatch]);  
-
-
-    // console.log("msfmsmf", AssignAccount)
-    console.log(accountdata)
 
     return (
         <nav className=' bg-white h-20 p-4 shadow-lg'>
@@ -56,16 +76,16 @@ const Navbar = ({ sideclose, setSideClose }) => {
                     <img width={200} className='' src={Logo} alt="" />
                     <MenuIcon onClick={() => setSideClose(!sideclose)} color='info' className='cursor-pointer' />
                     {/* module change */}
-                    
-                         <div>
-                            <h4 className='font-semibold text-base'>Module</h4>
-                            <select className='outline-none text-gray-600 text-md' name="" id="">
-                                {
-                                    accountdata.map(item => <option key={item} value={item}>{item}</option>)
-                                }
-                            </select>
-  
-                        </div>
+
+                    <div>
+                        <h4 className='font-medium text-base'>Assign Account</h4>
+                        <select onChange={(e) => setCurrentAccoundId(e.target.value)} className='outline-none text-gray-600 text-md' name="" id="">
+                            {
+                                accountdata.map(item => <option key={item} value={item}>{item}</option>)
+                            }
+                        </select>
+
+                    </div>
                 </div>
 
                 {/* right */}

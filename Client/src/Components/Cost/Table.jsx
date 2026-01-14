@@ -1,38 +1,71 @@
 
-const Table = ({costdata,type}) => {
-    
-  return (
-  <div className="py-5">
-    <table className='p-3 w-full border-gray-300 border'>
-      <thead>
-        <tr className='border-gray-300 border bg-gray-100 text-gray-500 text-center'>
-          <th className='border-gray-300 border p-[5px] text-left pl-4'>{type}</th>
-          <th className='border-gray-300 border p-[5px]'>Jan 2025</th>
-          <th className='border-gray-300 border p-[5px]'>Feb 2025</th>
-          <th className='border-gray-300 border p-[5px]'>Mar 2025</th>
-          <th className='border-gray-300 border p-[5px]'>Apr 2025</th>
-          <th className='border-gray-300 border p-[5px]'>May 2025</th>
-          <th>Total</th>
-        </tr>
-      </thead>
 
-      <tbody>
-        {costdata.map((item, index) => (
-          <tr key={index}>
-             <td className='border-gray-300 border font-semibold text-sm pl-4'>{item.type}</td>
-             <td className='border-gray-300 border text-center text-sm p-1 text-gray-600'>${item.jan2025}</td>
-             <td className='border-gray-300 border text-center text-sm p-1 text-gray-600'>${item.feb2025}</td>
-             <td className='border-gray-300 border text-center text-sm p-1 text-gray-600'>${item.mar2025}</td>
-             <td className='border-gray-300 border text-center text-sm p-1 text-gray-600'>${item.apr2025}</td>
-              <td className='border-gray-300 border text-center text-sm p-1 text-gray-600'>${item.may2025}</td>
-              <td className='border-gray-300 border text-center text-sm p-1 text-gray-600'>${item.total}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
 
+const Table = ({ costdata, type }) => {
+
+
+  function capitalizeFirstLetter(string) {
+  if (!string) return ""; 
+  return string.charAt(0).toUpperCase() + string.slice(1).replace("_"," ");
 }
 
-export default Table
+  const months = [
+    { key: "01-2025", label: "Jan 2025" },
+    { key: "02-2025", label: "Feb 2025" },
+    { key: "03-2025", label: "Mar 2025" },
+    { key: "04-2025", label: "Apr 2025" },
+    { key: "05-2025", label: "May 2025" }
+  ];
+
+  const getTotal = (monthCost = {}) => Object.values(monthCost).reduce((sum, v) => sum + v, 0);
+  type=capitalizeFirstLetter(type)
+
+  return (
+    <div className="py-5">
+      <table className="p-3 w-full border border-gray-300">
+        <thead>
+          <tr className="border border-gray-300 bg-gray-100 text-gray-500 text-center">
+            <th className="border border-gray-300 p-[5px] text-left pl-4">
+              {type}
+            </th>
+            {months.map(m => (
+              <th key={m.key} className="border border-gray-300 p-[5px]">
+                {m.label}
+              </th>
+            ))}
+            <th className="border border-gray-300 p-[5px]">Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {costdata.map((item) => {
+            const total = getTotal(item.monthCost);
+
+            return (
+              <tr key={item.type}>
+                <td className="border border-gray-300 font-semibold text-sm pl-4">
+                  {item.type}
+                </td>
+
+                {months.map(m => (
+                  <td
+                    key={m.key}
+                    className="border border-gray-300 text-center text-sm p-1 text-gray-600"
+                  >
+                    ${item.monthCost?.[m.key] ?? 0}
+                  </td>
+                ))}
+
+                <td className="border border-gray-300 text-center text-sm p-1 font-semibold">
+                  ${total}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Table;

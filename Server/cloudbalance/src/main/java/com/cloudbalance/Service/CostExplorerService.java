@@ -1,7 +1,7 @@
 package com.cloudbalance.Service;
 
 import com.cloudbalance.DTO.CostExplorer.ResponseAllCostAccountDTO;
-import com.cloudbalance.DTO.CostExplorer.ResponseGetALLAccountDTO;
+import com.cloudbalance.DTO.CostExplorer.ResponseGetAllAccountIdDTO;
 import com.snowflake.snowpark.DataFrame;
 import com.snowflake.snowpark.Row;
 import com.snowflake.snowpark.Session;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,84 +19,78 @@ public class CostExplorerService {
 
     @Autowired
     private Session session;
+//by default
+    public List<ResponseAllCostAccountDTO> getAllAccountByFilter(String type, LocalDate start, LocalDate end,Long accountid) {
+        String query = String.format("""
+                select  to_char(date_trunc('MONTH',bill_date),'MM-YYYY') as date,
+                %s,
+                sum(cost) as total
+                FROM cloudbalance.public.cloudbalance
+                WHERE bill_date >= '%s'
+                      AND bill_date <= '%s'
+                      AND account_id= '%s'
+                    GROUP BY %s,date
+                    ORDER BY date;
+            """, type,start,end,accountid,type);
+        Row[] rows = session.sql(query).collect();
 
+        Map<String, ResponseAllCostAccountDTO> grouped = new LinkedHashMap<>();
 
-
-
-    public List<ResponseAllCostAccountDTO> getAllAccountByFilter(String groupBy) {
-        String sql = String.format("""
-        SELECT %s,
-               SUM(CASE WHEN TO_CHAR(bill_date, 'YYYY-MM') = '2025-01' THEN cost ELSE 0 END) AS jan_2025,
-               SUM(CASE WHEN TO_CHAR(bill_date, 'YYYY-MM') = '2025-02' THEN cost ELSE 0 END) AS feb_2025,
-               SUM(CASE WHEN TO_CHAR(bill_date, 'YYYY-MM') = '2025-03' THEN cost ELSE 0 END) AS mar_2025,
-               SUM(CASE WHEN TO_CHAR(bill_date, 'YYYY-MM') = '2025-04' THEN cost ELSE 0 END) AS apr_2025,
-               SUM(CASE WHEN TO_CHAR(bill_date, 'YYYY-MM') = '2025-05' THEN cost ELSE 0 END) AS may_2025,
-               SUM(cost) AS total
-        FROM cloudbalance.public.cloudbalance
-        GROUP BY %s
-        ORDER BY total DESC
-    """, groupBy, groupBy);
-
-        DataFrame df = session.sql(sql);
-        Row[] rows = df.collect();
-        List<ResponseAllCostAccountDTO> result = new ArrayList<>();
         for (Row row : rows) {
-            result.add(new ResponseAllCostAccountDTO(
-                    row.getString(0),  // group value
-                    row.getLong(1),    // jan
-                    row.getLong(2),    // feb
-                    row.getLong(3),    // mar
-                    row.getLong(4),    // apr
-                    row.getLong(5),    // may
-                    row.getLong(6)     // total
-            ));
+            String month = row.getString(0);   // 02-2025
+            String filter = row.getString(1);  // AWS Lambda, Amazon EC2
+            Long cost = row.getLong(2);
+
+            grouped.putIfAbsent(filter,
+                    new ResponseAllCostAccountDTO(filter, new LinkedHashMap<>()));
+
+            ResponseAllCostAccountDTO dto = grouped.get(filter);
+            dto.getMonthCost().put(month, cost);
         }
-        return result;
+
+        return new ArrayList<>(grouped.values());
     }
 
-//    this is for subtype and type for get data
-public List<ResponseAllCostAccountDTO> getAccountByFilterAndType(String groupBy,List<String> subType){
 
-    String inClause = subType.stream()
-            .map(v -> "'" + v.replace("'", "''") + "'")
-            .collect(Collectors.joining(","));
+//this is filter and group
+    public List<ResponseAllCostAccountDTO> getAccountByFilterAndType(String groupby,List<String> subType,LocalDate start, LocalDate end,Long accountid) {
+        String inClause = subType.stream()
+                .map(v -> "'" + v.replace("'", "''") + "'")
+                .collect(Collectors.joining(","));
 
-
-    DataFrame df=session.sql(String.format("""
-    SELECT %s,
-           SUM(CASE WHEN TO_CHAR(bill_date,'YYYY-MM')='2025-01' THEN cost ELSE 0 END) AS jan_2025,
-           SUM(CASE WHEN TO_CHAR(bill_date,'YYYY-MM')='2025-02' THEN cost ELSE 0 END) AS feb_2025,
-           SUM(CASE WHEN TO_CHAR(bill_date,'YYYY-MM')='2025-03' THEN cost ELSE 0 END) AS mar_2025,
-           SUM(CASE WHEN TO_CHAR(bill_date,'YYYY-MM')='2025-04' THEN cost ELSE 0 END) AS apr_2025,
-           SUM(CASE WHEN TO_CHAR(bill_date,'YYYY-MM')='2025-05' THEN cost ELSE 0 END) AS may_2025,
-           SUM(cost) AS total
-    FROM cloudbalance.public.cloudbalance
-    WHERE %s IN (%s)
-    GROUP BY %s
-    ORDER BY total DESC
-    """,
-                groupBy,        // SELECT %s
-                groupBy,        // WHERE %s
-                inClause,       // IN (%s)
-                groupBy         // GROUP BY %s
-    ));
+        String sql=String.format("""
+                select to_char(date_trunc('MONTH',bill_date),'MM-YYYY') as date,
+                %s,
+               sum(cost) as total
+                FROM cloudbalance.public.cloudbalance
+                 WHERE bill_date >= '%s'
+                      AND bill_date <= '%s' AND 
+                     %s IN (%s)
+                      AND account_id='%s'
+                group by date,%s;
+                """,
+                groupby,start,end,groupby,inClause,accountid,groupby);
+        DataFrame df=session.sql(sql);
         Row[] rows=df.collect();
-        List<ResponseAllCostAccountDTO> result=new ArrayList<>();
-        for(Row row:rows){
-            result.add(new ResponseAllCostAccountDTO(
-                    row.getString(0),  // group value
-                    row.getLong(1),    // jan
-                    row.getLong(2),    // feb
-                    row.getLong(3),    // mar
-                    row.getLong(4),    // apr
-                    row.getLong(5),    // may
-                    row.getLong(6)     // total
-            ));
-        }
-        return result;
-}
+        Map<String, ResponseAllCostAccountDTO> grouped = new LinkedHashMap<>();
 
-//    filter wise
+        for (Row row : rows) {
+            String month = row.getString(0);   // 02-2025
+            String filter = row.getString(1);  // AWS Lambda, Amazon EC2
+            Long cost = row.getLong(2);
+
+            grouped.putIfAbsent(filter,
+                    new ResponseAllCostAccountDTO(filter, new LinkedHashMap<>()));
+
+            ResponseAllCostAccountDTO dto = grouped.get(filter);
+            dto.getMonthCost().put(month, cost);
+        }
+
+        return new ArrayList<>(grouped.values());
+    }
+
+
+    //    filter wise
     public Set<String> getSubFilterName(String filter){
         DataFrame df=session.sql(String.format("""
                 select %s from cloudbalance.public.cloudbalance
@@ -109,12 +104,12 @@ public List<ResponseAllCostAccountDTO> getAccountByFilterAndType(String groupBy,
         return subfilters;
     }
 
-//    this is for get all account
-public ResponseGetALLAccountDTO getAllAccount() {
+// get all accountid
+    public ResponseGetAllAccountIdDTO getAllAccount() {
 
     Row[] rows = session.sql("""
-        select account_id 
-        from cloudbalance.public.cloudbalance 
+        select account_id
+        from cloudbalance.public.cloudbalance
         group by account_id
     """).collect();
 
@@ -124,7 +119,7 @@ public ResponseGetALLAccountDTO getAllAccount() {
         accountIds.add(row.getLong(0));
     }
 
-    return new ResponseGetALLAccountDTO(accountIds);
+    return new ResponseGetAllAccountIdDTO(accountIds);
 }
 
 }

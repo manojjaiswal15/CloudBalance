@@ -26,6 +26,7 @@ public class GlobalException {
         return new ResponseEntity<>(new ErrorResponseDTO("JWT Expired Token", 401), HttpStatus.UNAUTHORIZED);
     }
 
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception ex) {
         return new ResponseEntity<>(new ErrorResponseDTO("Internal server error", 500), HttpStatus.INTERNAL_SERVER_ERROR);

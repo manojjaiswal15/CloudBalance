@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ResponseGetALLAccountDTO {
+public class ResponseGetAllAccountIdDTO {
     private List<Long> accountid;
 }

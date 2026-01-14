@@ -111,28 +111,28 @@ const AddUser = () => {
                     <div className='flex items-center gap-6 pb-6'>
                         <div className=''>
                             <label className='block' htmlFor="firstname">First name</label>
-                            <input className='border-gray-400 h-10 border rounded w-100 p-3' value={adduserData.firstname} onChange={(e) => changeHandler(e)} type="text" name="firstname" placeholder='Enter your First Name' />
+                            <input className='border-gray-400 h-10 border rounded w-100 p-3' value={adduserData.firstname} onChange={(e) => changeHandler(e)} type="text" name="firstname" placeholder='Enter your First Name'  required/>
                         </div>
                         <div className=''>
                             <label className='block' htmlFor="lastname">Last name</label>
-                            <input className='border-gray-400 h-10 border rounded w-100 p-3' value={adduserData.lastname} onChange={(e) => changeHandler(e)} type="text" name="lastname" placeholder='Enter your Last Name' />
+                            <input className='border-gray-400 h-10 border rounded w-100 p-3' value={adduserData.lastname} onChange={(e) => changeHandler(e)} type="text" name="lastname" placeholder='Enter your Last Name' required/>
                         </div>
                     </div>
                     {/* bottom */}
                     <div className='flex items-center gap-6 pb-6'>
                         <div className=''>
                             <label className='block' htmlFor="emailid">Email ID</label>
-                            <input className='border-gray-400 h-10 border rounded w-100 p-3 ' value={adduserData.emailid} onChange={(e) => changeHandler(e)} type="text" name="emailid" placeholder='Enter Email ID' />
+                            <input className='border-gray-400 h-10 border rounded w-100 p-3 ' value={adduserData.emailid} onChange={(e) => changeHandler(e)} type="text" name="emailid" placeholder='Enter Email ID' required/>
                         </div>
                         <div className=''>
                             <label className='block' htmlFor="lastname">Password</label>
-                            <input className='border-gray-400 h-10 border rounded w-100 p-3' value={adduserData.password} onChange={(e) => changeHandler(e)} type="password" name="password" placeholder='Enter your Last Name' />
+                            <input className='border-gray-400 h-10 border rounded w-100 p-3' value={adduserData.password} onChange={(e) => changeHandler(e)} type="password" name="password" placeholder='Enter your Last Name' required/>
                         </div>
 
                     </div>
                     <div className=''>
                         <label className='block' htmlFor="selectrole">Select Roles</label>
-                        <select className='border-gray-600 border w-100 h-10 bg-gray-100 text-gray-600' value={adduserData.role} onChange={(e) => changeHandler(e)} name="role" id="" placeholder='Select Roles'>
+                        <select className='border-gray-600 border w-100 h-10 bg-gray-100 text-gray-600' value={adduserData.role} onChange={(e) => changeHandler(e)} name="role" id="" placeholder='Select Roles' required>
                             <option value="" disabled selected>Select Roles</option>
                             <option value="admin">Admin</option>
                             <option value="customer">Customer</option>
@@ -206,7 +206,7 @@ const AddUser = () => {
                         }
                     </div>
 
-                    <button type='subimt' className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 '>Submit</button>
+                    <button type='subimt' className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 cursor-pointer '>Submit</button>
                 </form>
             </div>
         </div>

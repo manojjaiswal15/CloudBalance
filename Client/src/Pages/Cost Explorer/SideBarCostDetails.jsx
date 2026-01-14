@@ -1,32 +1,31 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { GroupTabLabel } from './config'
 import axios from 'axios'
 import { cost_base_url } from '../../Service/service'
 import { costAllData } from '../../store/costReducer/costAction'
 
-const SideBarCostDetails = () => {
+const SideBarCostDetails = ({start,end}) => {
     // this is for side type like 
     const [sideSubType, setSideSubType] = useState([])
     // like service,instance_type and etc.
     const [activeFilter, setActiveFilter] = useState(null);
     // activeFitler to get sub part ec2,lamba
     const [selectSubType, setSelectSubType] = useState([]);
+     const {accountPerUserData}=useSelector(state=>state.accountperuser)
     const dispatch = useDispatch()
 
 
     const token = localStorage.getItem("token")
-    console.log("smmsms", activeFilter)
 
 
     async function getCostByFilterAndType() {
         const items = activeFilter.toLowerCase().trim().replace(/\s+/g, "_");
-        const res = await axios.get(`${cost_base_url}/group?groupby=${items}&subtype=${selectSubType}`, {
+        const res = await axios.get(`${cost_base_url}/group?groupby=${items}&subtype=${selectSubType}&start=${start}&end=${end}&accountid=${accountPerUserData}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        console.log("this is end", res.data)
         dispatch(costAllData(res.data))
     }
 

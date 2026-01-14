@@ -14,5 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ResponseAssignAccountForCustomerRoleDTO {
     private Long id;
-    private List<String> assignAccount;
+    private List<Long> assignAccount;
 }

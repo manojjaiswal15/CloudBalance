@@ -1,13 +1,15 @@
 package com.cloudbalance.Controller;
 
 import com.cloudbalance.DTO.CostExplorer.ResponseAllCostAccountDTO;
-import com.cloudbalance.DTO.CostExplorer.ResponseGetALLAccountDTO;
+import com.cloudbalance.DTO.CostExplorer.ResponseGetAllAccountIdDTO;
 import com.cloudbalance.Service.CostExplorerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -19,13 +21,13 @@ public class CostExplorerController {
     private CostExplorerService costExplorerService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<ResponseAllCostAccountDTO>> getAllAccountByFilter(@RequestParam String groupby) {
-        return new ResponseEntity<>(costExplorerService.getAllAccountByFilter(groupby),HttpStatus.OK);
+    public ResponseEntity<List<ResponseAllCostAccountDTO>> getAllAccountByFilter(@RequestParam String groupby, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, @RequestParam Long accountid) {
+        return new ResponseEntity<>(costExplorerService.getAllAccountByFilter(groupby,start,end,accountid),HttpStatus.OK);
     }
 
     @GetMapping("/group")
-    public ResponseEntity<List<ResponseAllCostAccountDTO>> getAccountByFilterAndType(@RequestParam String groupby, @RequestParam List<String> subtype) {
-        return new ResponseEntity<>(costExplorerService.getAccountByFilterAndType(groupby,subtype),HttpStatus.OK);
+    public ResponseEntity<List<ResponseAllCostAccountDTO>> getAccountByFilterAndType(@RequestParam String groupby, @RequestParam List<String> subtype, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,@RequestParam Long accountid) {
+        return new ResponseEntity<>(costExplorerService.getAccountByFilterAndType(groupby,subtype,start,end,accountid),HttpStatus.OK);
     }
 
     @GetMapping("/filters")
@@ -34,7 +36,7 @@ public class CostExplorerController {
     }
 
     @GetMapping("/allaccounts")
-    public ResponseEntity<ResponseGetALLAccountDTO> getAllAccount(){
+    public ResponseEntity<ResponseGetAllAccountIdDTO> getAllAccount(){
         return new ResponseEntity<>(costExplorerService.getAllAccount(),HttpStatus.OK);
     }
 

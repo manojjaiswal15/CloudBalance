@@ -14,7 +14,7 @@ export default ReactFusioncharts.fcRoot(
 );
 
 
-export const GroupTabLabel=['Service','Instance Type','Usage Type','Platform','Region','Usage Type Group','Purchase Option','Resource','Account ID','Tenancy','Legal Entity','Billing Entity']
+export const GroupTabLabel=['Service','Instance Type','Usage Type','Platform','Region','Usage Type Group','Purchase Option','Resource','Tenancy','Legal Entity','Billing Entity']
 
 
 export const dataSource = {

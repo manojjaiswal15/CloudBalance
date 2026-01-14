@@ -17,35 +17,35 @@ import Table from '../../Components/Cost/Table';
 charts(FusionCharts);
 
 
-const CostServiceGraph = ({type}) => {
-   console.log(type)
+const CostServiceGraph = ({type,start,end}) => {
+
   const [chartActive,setChartActive]=useState("mscolumn2d");
   const [isLoading,setIsLoading]=useState(false)
   const token=localStorage.getItem("token")
   const {costdata}=useSelector(state=>state.cost)
+  const {accountPerUserData}=useSelector(state=>state.accountperuser)
   const dispatch=useDispatch()
+
 
   useEffect(()=>{
     const fetchCostAllData=async()=>{
      try {
       setIsLoading(true)
-       const res=await axios.get(`${cost_base_url}/all?groupby=${type}`,{
+       const res=await axios.get(`${cost_base_url}/all?groupby=${type}&start=${start}&end=${end}&accountid=${accountPerUserData}`,{
         headers:{
           Authorization:`Bearer ${token}`
         }
       })
       console.log(res.data)
       dispatch(costAllData(res.data))
-      // console.log(res.data)
       setIsLoading(false)
-      console.log(costdata)
      } catch (error) {
       console.log(error)
      }
     }
 
     fetchCostAllData()
-  },[token,dispatch,type])
+  },[token,dispatch,type,start,end,accountPerUserData])
 
 
   const datasource=useBuildFusionDataSource(costdata);

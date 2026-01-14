@@ -23,6 +23,6 @@ public class OnboardingAccountEntity {
     private Long accountId;
 
     @ManyToMany(mappedBy = "onboardingAccountEntities")
-    private List<UserEntity> users=new ArrayList<>();;
+    private List<UserEntity> users=new ArrayList<>();
 
 }

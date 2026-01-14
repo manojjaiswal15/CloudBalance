@@ -1,22 +1,18 @@
 import { useMemo } from "react";
 
+// "01-2025" -> "Jan 2025"
 const formatMonthLabel = (key) => {
-  const month = key.substring(0, 3);
-  const year = key.substring(3);
-  return `${month.charAt(0).toUpperCase()}${month.slice(1)} ${year}`;
+  const [month, year] = key.split("-");
+  const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${monthNames[parseInt(month,10)-1]} ${year}`;
 };
 
 const useBuildFusionDataSource = (costdata) => {
   return useMemo(() => {
     if (!Array.isArray(costdata) || costdata.length === 0) return null;
 
-    const monthKeys = Object.keys(costdata[0])
-      .filter(
-        key =>
-          key !== "type" &&
-          key !== "total" &&
-          typeof costdata[0][key] === "number"
-      );
+    // 🔹 Get month keys dynamically from monthCost
+    const monthKeys = Object.keys(costdata[0].monthCost || {});
 
     return {
       chart: {
@@ -27,7 +23,6 @@ const useBuildFusionDataSource = (costdata) => {
         formatnumberscale: "0"
       },
 
-      // 🔹 X-axis labels
       categories: [
         {
           category: monthKeys.map(k => ({
@@ -36,11 +31,10 @@ const useBuildFusionDataSource = (costdata) => {
         }
       ],
 
-      // 🔹 Series = instance types
       dataset: costdata.map(row => ({
-        seriesname: row.type,
+        seriesname: row.type, // AWS Lambda, EC2, etc
         data: monthKeys.map(k => ({
-          value: row[k] || 0
+          value: row.monthCost?.[k] || 0
         }))
       }))
     };

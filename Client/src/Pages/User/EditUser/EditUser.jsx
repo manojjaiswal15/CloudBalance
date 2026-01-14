@@ -214,7 +214,7 @@ const EditUser = () => {
                         }
                     </div>
 
-                    <button type='submit' className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 '>Edit</button>
+                    <button type='submit' className='bg-sky-600 text-white text-center px-4 py-2 rounded mt-6 cursor-pointer'>Edit</button>
                 </form>
             </div>
         </div>
