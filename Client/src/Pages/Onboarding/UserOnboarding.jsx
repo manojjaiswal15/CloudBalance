@@ -5,9 +5,11 @@ import axios from 'axios';
 import { account_base_url } from '../../Service/service';
 import { onboardingAccountTableHeading } from './config';
 import { useSelector } from 'react-redux';
+import Loading from '../../Components/Loading/Loading';
 
 const UserOnboarding = () => {
   const [onboardingList, setOnboardingList] = useState([])
+  const [isLoading,setIsLoading]=useState(false)
   const { user } = useSelector(state => state.auth)
   const navigate = useNavigate()
   const userToken = localStorage.getItem("token")
@@ -20,6 +22,7 @@ const UserOnboarding = () => {
   //all account fetch 
   useEffect(() => {
     async function handleFetchAccountOnboarding() {
+      setIsLoading(true)
       try {
         const response = await axios.get(
           `${account_base_url}/allaccounts`,
@@ -34,6 +37,7 @@ const UserOnboarding = () => {
       } catch (error) {
         console.error("Error fetching onboarding accounts:", error);
       }
+       setIsLoading(false)
     }
 
     handleFetchAccountOnboarding();
@@ -41,7 +45,7 @@ const UserOnboarding = () => {
 
 
   return (
-    <div className=''>
+   isLoading ? <div className='flex items-center justify-center h-screen'><Loading/></div> : <div className=''>
       {/* <h2>Account Onboarding</h2> */}
       <div className='bg-white p-3 rounded-md'>
         <div className=' pb-3 flex items-center justify-between '>

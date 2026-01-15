@@ -61,11 +61,11 @@ const GroupTabGraph = () => {
           <div className='flex items-center gap-10'>
             {/* calender */}
             <div className='p-1 border border-gray-300 rounded flex'>
-              <span className='-translate-y-4.5 bg-transparent'>From</span>
+              <span className='-translate-y-4.5 bg-gray-100 translate-x-1 text-gray-500 text-md px-1 font-medium'>From</span>
               <input value={startDate} onChange={(e)=>setStartDate(e.target.value)} className='outline-none bg-transparent' name="start" type="date" />
             </div>
              <div className='p-1 border border-gray-300 rounded flex'>
-              <span className='-translate-y-4.5 bg-transparent'>To</span>
+              <span className='-translate-y-4.5 bg-gray-100 translate-x-1 text-gray-500 text-md px-1 font-medium'>To</span>
               <input value={endDate} onChange={(e)=>setEndDate(e.target.value)}  className='outline-none bg-transparent' name="end" type="date" />
             </div>
             {/* swipe */}

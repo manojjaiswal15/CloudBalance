@@ -13,8 +13,8 @@ const User = () => {
          <button  onClick={()=>navigate('/dashboard/users/create')} className='border-sky-600 border-2 rounded px-3 py-2 bg-sky-600 cursor-pointer text-white mt-3'>Add User</button>
         </div> : ''
         }
-        <div className='mt-2'>
-            <h2 className='font-medium text-base text-gray-700'>All User details</h2>
+        <div className=' py-3'>
+            <h2 className='font-medium text-xl text-gray-700'>All User details</h2>
               <div className='mt-3'>
                 <UserTable/>
               </div>

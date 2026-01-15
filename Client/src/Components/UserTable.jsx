@@ -34,7 +34,7 @@ const UserTable = () => {
   }, []);
 
   return (
-   isLoading ? <div> <Loading/> </div> : <div className="p-4 bg-white overflow-y-auto" style={{ maxHeight: "60vh" }}>
+   isLoading ? <div className="flex items-center justify-center"> <Loading/> </div> : <div className="p-4 bg-white overflow-y-auto" style={{ maxHeight: "60vh" }}>
       <table className="w-full">
         <thead className="bg-sky-200">
           <tr className="border-e">
