@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.User;
+package com.cloudbalance.DTO.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
-package com.cloudbalance.Service;
+package com.cloudbalance.service;
 
-import com.cloudbalance.DTO.CostExplorer.ResponseAllCostAccountDTO;
-import com.cloudbalance.DTO.CostExplorer.ResponseGetAllAccountIdDTO;
+import com.cloudbalance.DTO.costExplorer.ResponseAllCostAccountDTO;
+import com.cloudbalance.DTO.costExplorer.ResponseGetAllAccountIdDTO;
 import com.snowflake.snowpark.DataFrame;
 import com.snowflake.snowpark.Row;
 import com.snowflake.snowpark.Session;

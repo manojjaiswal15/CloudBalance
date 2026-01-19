@@ -1,19 +1,18 @@
-package com.cloudbalance.Service;
+package com.cloudbalance.service;
 
-import com.cloudbalance.DTO.Onboarding.UserAddAccountOnboarding;
-import com.cloudbalance.DTO.User.LoginResponseJWTDTO;
-import com.cloudbalance.DTO.User.LoginUserDTO;
-import com.cloudbalance.DTO.User.ResponseUserDTO;
-import com.cloudbalance.Entity.OnboardingAccountEntity;
-import com.cloudbalance.Entity.UserEntity;
-import com.cloudbalance.Exception.EmailAlreadyInUsedException;
-import com.cloudbalance.Repository.OnBoardingAccountRepository;
-import com.cloudbalance.Repository.UserRepository;
+import com.cloudbalance.DTO.onboarding.UserAddAccountOnboarding;
+import com.cloudbalance.DTO.user.LoginResponseJWTDTO;
+import com.cloudbalance.DTO.user.LoginUserDTO;
+import com.cloudbalance.DTO.user.ResponseUserDTO;
+import com.cloudbalance.entity.OnboardingAccountEntity;
+import com.cloudbalance.entity.UserEntity;
+import com.cloudbalance.exception.EmailAlreadyInUsedException;
+import com.cloudbalance.repository.OnBoardingAccountRepository;
+import com.cloudbalance.repository.UserRepository;
 import com.cloudbalance.Utils.JWTUtil;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -58,8 +59,8 @@ public class UserService {
     @Transactional
     public ResponseEntity<ResponseUserDTO> addUser(UserAddAccountOnboarding userDTO) {
 
-    UserEntity userExists = userRepository.findByEmail(userDTO.getEmail()).orElseThrow();
-    if(userExists!=null){
+    Optional<UserEntity> userExists = userRepository.findByEmail(userDTO.getEmail());
+    if(userExists.isPresent()){
         throw new EmailAlreadyInUsedException("User already exists");
     }
         if (userDTO.getFirstName().isEmpty() || userDTO.getLastName().isEmpty() || userDTO.getEmail().isEmpty() || userDTO.getPassword().isEmpty()
@@ -69,22 +70,22 @@ public class UserService {
 
 
         // Create User
-        UserEntity user = new UserEntity();
-        user.setEmail(userDTO.getEmail());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setRole(userDTO.getRole());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        UserEntity user=UserEntity.builder().email(userDTO.getEmail())
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .role(userDTO.getRole())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .onboardingAccountEntities(new ArrayList<>())
+                .build();
 
         // Save user once
         UserEntity savedUser = userRepository.save(user);
 
         // Assign onboarding accounts ONLY for customer
         if ("customer".equalsIgnoreCase(savedUser.getRole())) {
-
             List<OnboardingAccountEntity> accounts = onBoardingAccountRepository.findAllById(userDTO.getAccountId());
             if (accounts.isEmpty()) {
-                throw new RuntimeException("Account not found");
+                throw new IllegalArgumentException("Account not found");
             }
             for (OnboardingAccountEntity account : accounts) {
                 savedUser.getOnboardingAccountEntities().add(account);
@@ -101,7 +102,7 @@ public class UserService {
     @Transactional
     public ResponseUserDTO editUser(UserAddAccountOnboarding edituser, Long id) {
         UserEntity user = userRepository.findById(id).orElseThrow();
-        if(user!=null){
+        if(user==null){
             throw  new IllegalArgumentException("User not found");
         }
         //  Update basic fields
@@ -109,20 +110,21 @@ public class UserService {
         user.setFirstName(edituser.getFirstName());
         user.setLastName(edituser.getLastName());
         user.setRole(edituser.getRole());
-        if (edituser.getPassword() != null && !edituser.getPassword().isBlank()) {
-            user.setPassword(passwordEncoder.encode(edituser.getPassword()));
-        }
+//        if (edituser.getPassword() != null && !edituser.getPassword().isBlank()) {
+//            user.setPassword(passwordEncoder.encode(edituser.getPassword()));
+//        }
 
         // Update onboarding accounts ONLY for customer
         if ("customer".equalsIgnoreCase(edituser.getRole())) {
             // clear old mapping
             user.getOnboardingAccountEntities().clear();
             List<Long> accountIds = edituser.getAccountId();
+            List<OnboardingAccountEntity> accounts = onBoardingAccountRepository.findAllById(accountIds);
+            if (accounts.isEmpty()) {
+                throw new RuntimeException("Account not found");
+            }
             if (accountIds != null && !accountIds.isEmpty()) {
-                List<OnboardingAccountEntity> accounts = onBoardingAccountRepository.findAllById(accountIds);
-                if (accounts.isEmpty()) {
-                    throw new RuntimeException("Account not found");
-                }
+
                 for (OnboardingAccountEntity account : accounts) {
                     user.getOnboardingAccountEntities().add(account);
                     account.getUsers().add(user);

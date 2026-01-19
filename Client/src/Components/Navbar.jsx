@@ -57,16 +57,16 @@ const Navbar = ({ sideclose, setSideClose }) => {
        dispatch(accountPerUser(currentAccountId));
 
       if (!currentAccountId && res.data.accountid.length > 0) {
-        setCurrentAccoundId(res.data.accountid[0]);
+        setCurrentAccoundId(res.data.accountid[2]);
       }
     }
   }
 
   getAllAccountIdFromSnowflake();
-}, [currentAccountId,dispatch]);
+}, [currentAccountId]);
 
 
-
+console.log("test " , currentAccountId)
 
     return (
         <nav className=' bg-white h-20 p-4 shadow-lg'>
@@ -79,7 +79,7 @@ const Navbar = ({ sideclose, setSideClose }) => {
 
                     <div>
                         <h4 className='font-medium text-base'>Assign Account</h4>
-                        <select onChange={(e) => setCurrentAccoundId(e.target.value)} className='outline-none text-gray-600 text-md' name="" id="">
+                        <select onChange={(e) => setCurrentAccoundId(e.target.value)} className='outline-none text-gray-600 text-md' name="" id="" defaultValue={currentAccountId}>
                             {
                                 accountdata.map(item => <option key={item} value={item}>{item}</option>)
                             }

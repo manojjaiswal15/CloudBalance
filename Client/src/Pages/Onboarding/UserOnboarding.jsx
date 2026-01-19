@@ -6,6 +6,7 @@ import { account_base_url } from '../../Service/service';
 import { onboardingAccountTableHeading } from './config';
 import { useSelector } from 'react-redux';
 import Loading from '../../Components/Loading/Loading';
+import { toast } from 'react-toastify';
 
 const UserOnboarding = () => {
   const [onboardingList, setOnboardingList] = useState([])
@@ -34,14 +35,15 @@ const UserOnboarding = () => {
         );
 
         setOnboardingList(response.data);
-      } catch (error) {
-        console.error("Error fetching onboarding accounts:", error);
+      } catch (err) {
+        // toast.error(err.response.data.message)
+        console.log("Error fetching onboarding accounts:", err);
       }
        setIsLoading(false)
     }
 
     handleFetchAccountOnboarding();
-  }, []);
+  }, [])
 
 
   return (

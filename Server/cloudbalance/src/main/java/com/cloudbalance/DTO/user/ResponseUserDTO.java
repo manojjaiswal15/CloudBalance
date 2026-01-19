@@ -1,6 +1,6 @@
-package com.cloudbalance.DTO.User;
+package com.cloudbalance.DTO.user;
 
-import com.cloudbalance.Entity.UserEntity;
+import com.cloudbalance.entity.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 

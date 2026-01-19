@@ -13,7 +13,7 @@ const EditUser = () => {
         lastname: "",
         emailid: "",
         role: "",
-        password: ""
+        // password: ""
     })
     const [selectedOnboardingAccount, setSelectedOnboardingAccount] = useState([]);
     const [allOnboardingAcount, setAllOnboardingAccount] = useState([])
@@ -54,7 +54,7 @@ const EditUser = () => {
                     lastname: response.data.lastName,
                     emailid: response.data.email,
                     role: response.data.role,
-                    password: response.data.password
+                    // password: response.data.password
                 });
 
 
@@ -80,7 +80,7 @@ const EditUser = () => {
             lastName: edituserData.lastname,
             email: edituserData.emailid,
             role: edituserData.role,
-            password: edituserData.password,
+            // password: edituserData.password,
             accountId: selectedOnboardingAccount
         };
         try {
@@ -97,7 +97,7 @@ const EditUser = () => {
             toast.success("Update Successfully")
             navigate("/dashboard/users");
         } catch (error) {
-            toast.error("Update failed", error);
+            toast.error("Update failed", error.response.data.message);
         }
 
     }
@@ -131,12 +131,12 @@ const EditUser = () => {
                     <div className='flex items-center gap-6 pb-6'>
                         <div className=''>
                             <label className='block' htmlFor="emailid">Email ID</label>
-                            <input className='border-gray-400 h-10 border rounded w-100 p-3 ' required value={edituserData.emailid} onChange={(e) => changeHandler(e)} type="text" name="emailid" placeholder='Enter Email ID' />
+                            <input className='border-gray-400 h-10 border rounded w-100 p-3 ' disabled required value={edituserData.emailid} onChange={(e) => changeHandler(e)} type="text" name="emailid" placeholder='Enter Email ID' />
                         </div>
-                        <div className=''>
+                        {/* <div className=''>
                             <label className='block' htmlFor="lastname">Password</label>
                             <input className='border-gray-400 h-10 border rounded w-100 p-3' required value={edituserData.password} onChange={(e) => changeHandler(e)} type="password" name="password" placeholder='Enter your Last Name' />
-                        </div>
+                        </div> */}
 
                     </div>
                     <div className=''>

@@ -1,14 +1,14 @@
-package com.cloudbalance.Service;
+package com.cloudbalance.service;
 
 
-import com.cloudbalance.DTO.Onboarding.AccountAssignDTO;
-import com.cloudbalance.DTO.Onboarding.RequestAddAccountDTO;
-import com.cloudbalance.DTO.Onboarding.ResponseAddAccountDTO;
-import com.cloudbalance.DTO.Onboarding.ResponseAssignAccountForCustomerRoleDTO;
-import com.cloudbalance.Entity.OnboardingAccountEntity;
-import com.cloudbalance.Entity.UserEntity;
-import com.cloudbalance.Repository.OnBoardingAccountRepository;
-import com.cloudbalance.Repository.UserRepository;
+import com.cloudbalance.DTO.onboarding.AccountAssignDTO;
+import com.cloudbalance.DTO.onboarding.RequestAddAccountDTO;
+import com.cloudbalance.DTO.onboarding.ResponseAddAccountDTO;
+import com.cloudbalance.DTO.onboarding.ResponseAssignAccountForCustomerRoleDTO;
+import com.cloudbalance.entity.OnboardingAccountEntity;
+import com.cloudbalance.entity.UserEntity;
+import com.cloudbalance.repository.OnBoardingAccountRepository;
+import com.cloudbalance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

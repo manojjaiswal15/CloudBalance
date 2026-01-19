@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.Onboarding;
+package com.cloudbalance.DTO.onboarding;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

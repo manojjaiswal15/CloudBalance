@@ -177,7 +177,7 @@ const UserOnboardingThirdPage = ({ setIndexPage, onboardingAddAccountData }) => 
                 navigate("/dashboard/onboarding")
             }
         } catch (error) {
-            toast.error(error)
+            toast.error(error.response.data.message)
         }
     }
 

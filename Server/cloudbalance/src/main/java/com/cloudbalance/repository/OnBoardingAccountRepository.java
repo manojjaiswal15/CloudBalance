@@ -1,6 +1,6 @@
-package com.cloudbalance.Repository;
+package com.cloudbalance.repository;
 
-import com.cloudbalance.Entity.OnboardingAccountEntity;
+import com.cloudbalance.entity.OnboardingAccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

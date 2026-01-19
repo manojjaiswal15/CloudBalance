@@ -6,6 +6,7 @@ import { account_base_url } from '../../../Service/service';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { toast } from 'react-toastify';
 
 const AddUser = () => {
 
@@ -70,6 +71,7 @@ const AddUser = () => {
 
         navigate('/dashboard');
     } catch (error) {
+        toast.error(error.response.data.message)
         console.error("User creation failed:", error);
     }
 }

@@ -1,32 +1,35 @@
 package com.cloudbalance.Controller;
 
-import com.cloudbalance.DTO.Onboarding.UserAddAccountOnboarding;
-import com.cloudbalance.DTO.User.*;
-import com.cloudbalance.Service.UserService;
+import com.cloudbalance.DTO.onboarding.UserAddAccountOnboarding;
+import com.cloudbalance.DTO.user.*;
+import com.cloudbalance.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@Validated
 public class UserController {
+
     @Autowired
     private UserService userService;
 
 
-
 //    login
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseJWTDTO> login(@RequestBody LoginUserDTO loginUser){
+    public ResponseEntity<LoginResponseJWTDTO> login(@Valid @RequestBody LoginUserDTO loginUser){
         return  new ResponseEntity<>(userService.loginUser(loginUser),HttpStatus.OK);
     }
 
 //     users Add
     @PostMapping("/add")
-    public ResponseEntity<ResponseUserDTO> addUser(@RequestBody UserAddAccountOnboarding userDTO) {
+    public ResponseEntity<ResponseUserDTO> addUser(@Valid @RequestBody UserAddAccountOnboarding userDTO) {
         return userService.addUser(userDTO);
     }
 

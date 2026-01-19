@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.CostExplorer;
+package com.cloudbalance.DTO.costExplorer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.cloudbalance.Entity;
+package com.cloudbalance.entity;
 
 
 import jakarta.persistence.*;

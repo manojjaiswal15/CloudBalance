@@ -1,6 +1,6 @@
 package com.cloudbalance.config;
 
-import com.cloudbalance.Repository.UserRepository;
+import com.cloudbalance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

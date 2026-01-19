@@ -1,7 +1,7 @@
-package com.cloudbalance.DTO.Onboarding;
+package com.cloudbalance.DTO.onboarding;
 
 
-import com.cloudbalance.Entity.OnboardingAccountEntity;
+import com.cloudbalance.entity.OnboardingAccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

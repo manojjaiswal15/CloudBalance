@@ -65,7 +65,7 @@ const Login = () => {
                     <img width={300} src={Logo} alt="" />
                     <div className='flex flex-col items-start justify-center w-full gap-2'>
                         <label className='text-lg font-semibold' htmlFor="email">Email</label>
-                        <input value={loginDetails.email} onChange={(e) => changeHandler(e)} className='w-full border border-gray-400 h-10 px-2' type="email" required name="email" placeholder='Enter your mail' />
+                        <input value={loginDetails.email} onChange={(e) => changeHandler(e)} className='w-full border border-gray-400 h-10 px-2' type="email" required  name="email" placeholder='Enter your mail' />
                     </div>
                     <div className='flex flex-col items-start justify-center w-full gap-2'>
                         <label className='text-lg font-semibold' htmlFor="password">Password</label>
