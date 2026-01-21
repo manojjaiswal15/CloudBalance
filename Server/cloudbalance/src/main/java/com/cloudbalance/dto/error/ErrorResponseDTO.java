@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.error;
+package com.cloudbalance.dto.error;
 
 
 import lombok.AllArgsConstructor;

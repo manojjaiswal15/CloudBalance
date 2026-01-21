@@ -1,6 +1,6 @@
 package com.cloudbalance.exception;
 
-import com.cloudbalance.DTO.error.ErrorResponseDTO;
+import com.cloudbalance.dto.error.ErrorResponseDTO;
 import io.jsonwebtoken.JwtException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -12,14 +12,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import tools.jackson.databind.exc.InvalidFormatException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
-public class GlobalException {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorResponseDTO> handleApiException(ApiException ex) {
@@ -28,7 +27,7 @@ public class GlobalException {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponseDTO> handleBadCredentials(BadCredentialsException ex) {
-        return new ResponseEntity<>(new ErrorResponseDTO("Invalid credentials", 401), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponseDTO( ex.getMessage(), 401), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(JwtException.class)
@@ -77,6 +76,11 @@ public class GlobalException {
     @ExceptionHandler(NullPointerException.class)
     public  ResponseEntity<ErrorResponseDTO> handleNullPointerException(NullPointerException ex){
         return new ResponseEntity<>(new ErrorResponseDTO("Some null pointer exception occured "+ ex.getMessage(), 400), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNumberFormatException(NumberFormatException ex){
+        return new ResponseEntity<>(new ErrorResponseDTO( ex.getMessage(), 400), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

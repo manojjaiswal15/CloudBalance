@@ -13,12 +13,20 @@ const SideBarCostDetails = ({start,end}) => {
     const [activeFilter, setActiveFilter] = useState(null);
     // activeFitler to get sub part ec2,lamba
     const [selectSubType, setSelectSubType] = useState([]);
+    const [filterValue,setFilterValue]=useState('')
      const {accountPerUserData}=useSelector(state=>state.accountperuser)
      const [isLoading,setIsLoading]=useState(false)
     const dispatch = useDispatch()
 
 
     const token = localStorage.getItem("token")
+
+    function handleFilterSearch(e){
+        setFilterValue(e.target.value)
+        const filteredSubTypes = sideSubType.filter(item =>
+    item.toLowerCase().includes(filterValue.toLowerCase())
+);
+    }
 
 
     async function getCostByFilterAndType() {
@@ -100,7 +108,9 @@ const SideBarCostDetails = ({start,end}) => {
                             <div className="absolute bg-white w-full top-full px-3 pt-2 flex flex-col gap-3 max-h-80 overflow-y-scroll shadow rounded z-10">
                                 <div className='sticky top-0 z-10 bg-white max-h-[20vh] py-2'>
                                     <span>{sideSubType.length > 0 ? "" : "No filters currently added."}</span>
-                                    <input className='w-full border border-gray-300 rounded px-2 h-8 py-3' type="text" placeholder='Search' />
+                                    {/* <input onChange={(e)=>handleFilterSearch(e)} value={filterValue} className='w-full border border-gray-300 rounded px-2 h-8 py-3' type="text" placeholder='Search' /> */}
+                                    <input value={filterValue} onChange={handleFilterSearch} className="w-full border border-gray-300 rounded px-2 h-8 py-3" type="text" placeholder="Search"/>
+
                                     <p className='text-sm font-semibold pt-2'>Showing {sideSubType.length} results</p>
                                     <label className="flex items-center gap-2 text-sm font-semibold">
                                         <input type="checkbox"  onChange={selectedAllSubTypeValue} checked={sideSubType.length > 0 &&   selectSubType.length === sideSubType.length  }  />

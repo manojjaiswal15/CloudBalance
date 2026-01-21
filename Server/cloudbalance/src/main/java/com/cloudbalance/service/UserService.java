@@ -1,15 +1,15 @@
 package com.cloudbalance.service;
 
-import com.cloudbalance.DTO.onboarding.UserAddAccountOnboarding;
-import com.cloudbalance.DTO.user.LoginResponseJWTDTO;
-import com.cloudbalance.DTO.user.LoginUserDTO;
-import com.cloudbalance.DTO.user.ResponseUserDTO;
+import com.cloudbalance.dto.onboarding.UserAddAccountOnboarding;
+import com.cloudbalance.dto.user.LoginResponseJWTDTO;
+import com.cloudbalance.dto.user.LoginUserDTO;
+import com.cloudbalance.dto.user.ResponseUserDTO;
 import com.cloudbalance.entity.OnboardingAccountEntity;
 import com.cloudbalance.entity.UserEntity;
 import com.cloudbalance.exception.EmailAlreadyInUsedException;
 import com.cloudbalance.repository.OnBoardingAccountRepository;
 import com.cloudbalance.repository.UserRepository;
-import com.cloudbalance.Utils.JWTUtil;
+import com.cloudbalance.utils.JWTUtil;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +121,7 @@ public class UserService {
             List<Long> accountIds = edituser.getAccountId();
             List<OnboardingAccountEntity> accounts = onBoardingAccountRepository.findAllById(accountIds);
             if (accounts.isEmpty()) {
-                throw new RuntimeException("Account not found");
+                throw new IllegalArgumentException("Account not found");
             }
             if (accountIds != null && !accountIds.isEmpty()) {
 

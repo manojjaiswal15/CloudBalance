@@ -75,32 +75,35 @@ const EditUser = () => {
     // edit
     async function submithandlerEditUser(e) {
         e.preventDefault();
+
         const updatedUser = {
             firstName: edituserData.firstname,
             lastName: edituserData.lastname,
             email: edituserData.emailid,
             role: edituserData.role,
-            // password: edituserData.password,
             accountId: selectedOnboardingAccount
         };
+
         try {
-            await axios.put(
+            const response = await axios.put(
                 `${user_base_url}/edit/${id}`,
                 updatedUser,
                 {
                     headers: {
                         Authorization: `Bearer ${userToken}`,
                     },
-                },
+                }
             );
-            seteditUserData({ firstname: "", lastname: "", emailid: "", role: "", password: "" })
-            toast.success("Update Successfully")
-            navigate("/dashboard/users");
-        } catch (error) {
-            toast.error("Update failed", error.response.data.message);
-        }
 
+            toast.success("Update Successfully");
+            navigate("/dashboard/users");
+
+        } catch (error) {
+            toast.error(error.response?.data?.message);
+        }
     }
+
+
 
     // mapping left checkbox to send right box 
     const handleAccountToggle = (accountId) => {
@@ -174,10 +177,10 @@ const EditUser = () => {
                                     <div className='flex flex-col gap-10'>
                                         {/* left button */}
                                         <div className=' w-10 h-10 rounded-full bg-gray-600 text-white flex items-center justify-center'>
-                                            <ArrowForwardIcon/>
+                                            <ArrowForwardIcon />
                                         </div>
                                         {/* right button */}
-                                        <div className=' w-10 h-10 rounded-full bg-gray-600 text-white flex items-center justify-center'><ArrowBackIcon/></div>
+                                        <div className=' w-10 h-10 rounded-full bg-gray-600 text-white flex items-center justify-center'><ArrowBackIcon /></div>
                                     </div>
 
                                     {/* right side */}

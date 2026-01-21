@@ -6,6 +6,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CostServiceGraph from './CostServiceGraph';
 import { GroupTabLabel } from './config';
 import SideBarCostDetails from './SideBarCostDetails';
+import { toast } from 'react-toastify';
 
 
 const GroupTabGraph = () => {
@@ -26,6 +27,12 @@ const GroupTabGraph = () => {
     setRestGraphLabelSplit(remaining.slice(VISIBLE_COUNT));
     setSelectType(activeTab.toLowerCase().trim().replaceAll(' ', '_'))
   }, [activeTab]);
+
+  useEffect(()=>{
+    if(startDate>endDate){
+      toast.error("This format is ")
+    }
+  },[endDate,startDate])
 
   return (
     <div className='overflow-x-hidden'>

@@ -1,4 +1,4 @@
-package com.cloudbalance.Utils;
+package com.cloudbalance.utils;
 
 
 import org.springframework.beans.factory.annotation.Value;

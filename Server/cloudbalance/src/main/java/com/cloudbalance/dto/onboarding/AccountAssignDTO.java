@@ -1,5 +1,4 @@
-package com.cloudbalance.DTO.onboarding;
-
+package com.cloudbalance.dto.onboarding;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,11 +7,11 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseAssignAccountForCustomerRoleDTO {
-    private Long id;
-    private List<Long> assignAccount;
+public class AccountAssignDTO {
+    private Long userId;
+    private List<Long> account;
 }

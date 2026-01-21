@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.user;
+package com.cloudbalance.dto.user;
 
 
 import jakarta.validation.constraints.NotBlank;

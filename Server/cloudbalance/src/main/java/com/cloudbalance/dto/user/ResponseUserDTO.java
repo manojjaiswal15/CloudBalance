@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.user;
+package com.cloudbalance.dto.user;
 
 import com.cloudbalance.entity.UserEntity;
 import lombok.Getter;

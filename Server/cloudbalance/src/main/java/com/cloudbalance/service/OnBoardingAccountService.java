@@ -1,10 +1,10 @@
 package com.cloudbalance.service;
 
 
-import com.cloudbalance.DTO.onboarding.AccountAssignDTO;
-import com.cloudbalance.DTO.onboarding.RequestAddAccountDTO;
-import com.cloudbalance.DTO.onboarding.ResponseAddAccountDTO;
-import com.cloudbalance.DTO.onboarding.ResponseAssignAccountForCustomerRoleDTO;
+import com.cloudbalance.dto.onboarding.AccountAssignDTO;
+import com.cloudbalance.dto.onboarding.RequestAddAccountDTO;
+import com.cloudbalance.dto.onboarding.ResponseAddAccountDTO;
+import com.cloudbalance.dto.onboarding.ResponseAssignAccountForCustomerRoleDTO;
 import com.cloudbalance.entity.OnboardingAccountEntity;
 import com.cloudbalance.entity.UserEntity;
 import com.cloudbalance.repository.OnBoardingAccountRepository;

@@ -1,8 +1,8 @@
-package com.cloudbalance.Controller;
+package com.cloudbalance.controller;
 
 
-import com.cloudbalance.DTO.onboarding.RequestAddAccountDTO;
-import com.cloudbalance.DTO.onboarding.ResponseAddAccountDTO;
+import com.cloudbalance.dto.onboarding.RequestAddAccountDTO;
+import com.cloudbalance.dto.onboarding.ResponseAddAccountDTO;
 import com.cloudbalance.service.OnBoardingAccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

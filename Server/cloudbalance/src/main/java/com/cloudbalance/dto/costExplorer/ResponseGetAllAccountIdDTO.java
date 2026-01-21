@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.onboarding;
+package com.cloudbalance.dto.costExplorer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +7,10 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountAssignDTO {
-    private Long userId;
-    private List<Long> account;
+@Getter
+@Setter
+public class ResponseGetAllAccountIdDTO {
+    private List<Long> accountid;
 }

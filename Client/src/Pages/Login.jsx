@@ -25,7 +25,7 @@ const Login = () => {
         e.preventDefault();
 
         if (!loginDetails.email || !loginDetails.password) {
-            toast.error("Email and Password required");
+            toast.error(error);
             return;
         }
 

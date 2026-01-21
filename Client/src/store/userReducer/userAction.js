@@ -10,7 +10,7 @@ export const login = (email, password) => {
     try {
       const response = await axios.post( `${user_base_url}/login`, { email, password });  
           
-       if (!response.data) {
+       if (!response?.data) {
         throw new Error("Invalid credentials");
       }
 
@@ -26,7 +26,7 @@ export const login = (email, password) => {
     } catch (error) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message ,
       });
     }
   };

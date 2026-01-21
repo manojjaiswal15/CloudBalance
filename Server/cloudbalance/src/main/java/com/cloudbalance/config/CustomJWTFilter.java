@@ -1,6 +1,6 @@
 package com.cloudbalance.config;
 
-import com.cloudbalance.Utils.JWTUtil;
+import com.cloudbalance.utils.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

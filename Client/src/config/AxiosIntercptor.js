@@ -9,7 +9,7 @@ axios.interceptors.response.use(
 
     if (status === 401) {
       localStorage.removeItem("token");
-      // toast.error("JWT Expired or Invalid Token");
+      toast.error("JWT Expired or Invalid Token");
 
       setTimeout(() => {
         window.location.href = "/";
@@ -29,6 +29,6 @@ axios.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // return Promise.reject(error);
+    return Promise.reject(error);
   }
 );

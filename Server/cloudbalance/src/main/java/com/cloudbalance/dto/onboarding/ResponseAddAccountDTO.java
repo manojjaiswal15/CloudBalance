@@ -1,4 +1,4 @@
-package com.cloudbalance.DTO.onboarding;
+package com.cloudbalance.dto.onboarding;
 
 
 import com.cloudbalance.entity.OnboardingAccountEntity;

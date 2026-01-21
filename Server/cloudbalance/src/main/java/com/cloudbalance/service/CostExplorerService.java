@@ -1,7 +1,7 @@
 package com.cloudbalance.service;
 
-import com.cloudbalance.DTO.costExplorer.ResponseAllCostAccountDTO;
-import com.cloudbalance.DTO.costExplorer.ResponseGetAllAccountIdDTO;
+import com.cloudbalance.dto.costExplorer.ResponseAllCostAccountDTO;
+import com.cloudbalance.dto.costExplorer.ResponseGetAllAccountIdDTO;
 import com.snowflake.snowpark.DataFrame;
 import com.snowflake.snowpark.Row;
 import com.snowflake.snowpark.Session;
@@ -21,6 +21,10 @@ public class CostExplorerService {
     private Session session;
 //by default
     public List<ResponseAllCostAccountDTO> getAllAccountByFilter(String type, LocalDate start, LocalDate end,Long accountid) {
+
+        if(start.isAfter(end)){
+            throw new IllegalArgumentException("Date Format is Wrong");
+        }
         String query = String.format("""
                 select  to_char(date_trunc('MONTH',bill_date),'MM-YYYY') as date,
                 %s,
